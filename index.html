@@ -210,7 +210,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         <label class="toggle-switch"><input type="checkbox" id="b_earlyOn" checked onchange="refreshAll()"><span class="toggle-slider"></span></label>
       </div>
 
-      <!-- -- DOCUMENT REQUIREMENTS -- -->
+      <!-- ── DOCUMENT REQUIREMENTS ── -->
       <div class="field-group" style="margin-top:8px">
         <label class="field-label">REQUIRED DOCUMENTS</label>
         <div id="docToggles" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px"></div>
@@ -220,7 +220,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
         </div>
       </div>
 
-      <!-- -- STIPULATIONS -- -->
+      <!-- ── STIPULATIONS ── -->
       <div class="field-group">
         <label class="field-label">STIPULATIONS</label>
         <div id="stipList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
@@ -256,7 +256,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 <div class="modal-overlay" id="saveModal">
   <div class="modal">
     <div class="form-success">
-      <div class="si">??</div>
+      <div class="si">🎉</div>
       <h3>Offer Saved!</h3>
       <p>Share this link with your client. Edit the offer anytime — they'll see changes instantly on refresh.</p>
       <div class="offer-id-box">
@@ -273,12 +273,12 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 <div class="modal-overlay" id="sendModal">
   <div class="modal">
     <div id="sendSuccess" style="display:none" class="form-success">
-      <div class="si">??</div><h3>Approval sent!</h3>
+      <div class="si">🚀</div><h3>Approval sent!</h3>
       <p>The offer link has been emailed to your client.</p>
       <button class="mbtn-c" style="margin-top:18px;width:100%" onclick="closeModal('sendModal');resetSendModal()">Close</button>
     </div>
     <div id="sendFormWrap">
-      <div class="mhdr"><div class="micon" style="background:rgba(0,212,170,.1)">??</div><div><div class="mtitle">Send Approval to Client</div><div class="msub">Deliver the offer link via email</div></div></div>
+      <div class="mhdr"><div class="micon" style="background:rgba(0,212,170,.1)">🚀</div><div><div class="mtitle">Send Approval to Client</div><div class="msub">Deliver the offer link via email</div></div></div>
       <div class="ferr" id="sendErr">Something went wrong. Please try again.</div>
       <form id="sendForm" action="https://formsubmit.co/mark@clearcapfund.com" method="POST">
         <input type="hidden" name="_subject" id="sf_subject">
@@ -322,34 +322,34 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 <div id="toast"></div>
 
 <script>
-// ?????????????????????????????????????
-// ?? CONFIG — PASTE YOUR VALUES HERE
-// ?????????????????????????????????????
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// 🔧 CONFIG — PASTE YOUR VALUES HERE
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const SUPABASE_URL     = 'https://dmhiltzyfxdrcvysisry.supabase.co';
 const SUPABASE_ANON_KEY= 'PASTE_YOUR_ANON_KEY_HERE';
 const PORTAL_BASE      = 'https://portal.clearcapfund.com'; // your subdomain
 const BUILDER_PASSWORD = 'clearcap2024'; // change this!
-// ?????????????????????????????????????
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 function doLogin(){
   const pass=document.getElementById('loginPass').value;
   if(pass===BUILDER_PASSWORD){
     document.getElementById('loginScreen').style.display='none';
     const bv=document.getElementById('builderView');
-    bv.style.display='flex'; // -- DOCUMENT TOGGLES --
+    bv.style.display='flex'; // ── DOCUMENT TOGGLES ──
 const STD_DOCS = [
-  {id:'dl',    icon:'??', label:"Driver's License"},
-  {id:'void',  icon:'??', label:'Voided Check'},
-  {id:'bank',  icon:'??', label:'4 Mo. Bank Statements'},
-  {id:'pl',    icon:'??', label:'P&L Statement'},
-  {id:'biztax',icon:'??', label:'Business Tax Returns'},
-  {id:'pertax',icon:'??', label:'Personal Tax Returns'},
-  {id:'ar',    icon:'??', label:'Accounts Receivable (AR)'},
-  {id:'proc',  icon:'??', label:'Processing Statements'},
-  {id:'payoff',icon:'??', label:'Payoff Letter(s)'},
-  {id:'zero',  icon:'?', label:'Zero Balance Letter(s)'},
-  {id:'proof', icon:'??', label:'Proof of Business'},
-  {id:'app',   icon:'??', label:'Business Application'},
+  {id:'dl',    icon:'🪪', label:"Driver's License"},
+  {id:'void',  icon:'🏦', label:'Voided Check'},
+  {id:'bank',  icon:'🏦', label:'4 Mo. Bank Statements'},
+  {id:'pl',    icon:'📊', label:'P&L Statement'},
+  {id:'biztax',icon:'📋', label:'Business Tax Returns'},
+  {id:'pertax',icon:'📋', label:'Personal Tax Returns'},
+  {id:'ar',    icon:'📈', label:'Accounts Receivable (AR)'},
+  {id:'proc',  icon:'💳', label:'Processing Statements'},
+  {id:'payoff',icon:'📄', label:'Payoff Letter(s)'},
+  {id:'zero',  icon:'✅', label:'Zero Balance Letter(s)'},
+  {id:'proof', icon:'🏢', label:'Proof of Business'},
+  {id:'app',   icon:'📝', label:'Business Application'},
 ];
 let activeDocs = new Set(['dl','void']); // default
 let customDocs = []; // [{id, label}]
@@ -385,7 +385,7 @@ function addCustomDoc(){
   const label = inp.value.trim();
   if(!label) return;
   const id = 'custom_'+(++customDocCounter);
-  customDocs.push({id, icon:'??', label});
+  customDocs.push({id, icon:'📎', label});
   activeDocs.add(id);
   inp.value = '';
   renderDocToggles();
@@ -399,7 +399,7 @@ function removeCustomDoc(id){
   S.customDocs = customDocs;
 }
 
-// -- STIPULATIONS --
+// ── STIPULATIONS ──
 function renderStips(){
   const list = document.getElementById('stipList');
   if(!stipulations.length){list.innerHTML='<div style="font-size:11px;color:var(--slate4);padding:4px 0">No stipulations added.</div>';return;}
@@ -428,7 +428,7 @@ function addStip(){
 function removeStip(id){stipulations=stipulations.filter(s=>s.id!==id);renderStips();S.stipulations=stipulations;}
 function updateStip(id,key,val){const s=stipulations.find(s=>s.id===id);if(s){s[key]=val;}S.stipulations=stipulations;}
 
-// -- INIT DOCS/STIPS ON LOAD --
+// ── INIT DOCS/STIPS ON LOAD ──
 renderDocToggles();
 renderStips();
 S.activeDocs=[...activeDocs];
@@ -489,9 +489,9 @@ function renderPortal(s){
   const interest=total-s.amt;
   const termBtns=s.terms.map(t=>`<span class="chip${t===s.selTerm?' active':''}">${t} mo</span>`).join('');
   const freqBtns=s.freqs.map(f=>`<span class="chip${f===s.selFreq?' active':''}">${f}</span>`).join('');
-  const termRows=s.terms.map(t=>{const c=calc(s.amt,t,s.selFreq,s.factor);return`<tr style="${t===s.selTerm?'color:var(--em)':''}"><td style="padding:8px 0;border-top:1px solid rgba(255,255,255,.06);font-size:11px">${t===s.selTerm?'? ':''}${t} mo</td><td style="padding:8px 0;border-top:1px solid rgba(255,255,255,.06);font-size:11px;text-align:right;font-family:DM Mono,monospace;font-weight:600">${fm(c.pmt)}</td></tr>`;}).join('');
-  const earlyHTML=s.earlyOn?`<div class="p-card"><div class="sec-label">? EARLY PAYOFF</div><div class="ep-grid">${[{l:'30-DAY',p:.5},{l:'60-DAY',p:.3},{l:'90-DAY',p:.1}].map((e,i,a)=>{const sv=interest*e.p,po=total-sv,bp=Math.round((e.p/a[0].p)*100);return`<div class="ep-tile"><div class="ep-day">${e.l}</div><div class="ep-amt">${fm(po)}</div><div class="ep-save">Save ${fm(sv)}</div><div class="ep-bar"><div class="ep-bar-fill" style="width:${bp}%"></div></div></div>`;}).join('')}</div></div>`:'';
-  const refiHTML=s.refiOn?`<div class="p-card"><div class="sec-label">?? REFI SUMMARY</div><div class="refi-row"><span class="refi-key">Balance at midpoint</span><span class="refi-val">${fm(total*.5)}</span></div><div class="refi-row"><span class="refi-key">Cash to you</span><span class="refi-val g">${s.amt>total*.5?fm(s.amt-total*.5):'N/A'}</span></div></div>`:'';
+  const termRows=s.terms.map(t=>{const c=calc(s.amt,t,s.selFreq,s.factor);return`<tr style="${t===s.selTerm?'color:var(--em)':''}"><td style="padding:8px 0;border-top:1px solid rgba(255,255,255,.06);font-size:11px">${t===s.selTerm?'→ ':''}${t} mo</td><td style="padding:8px 0;border-top:1px solid rgba(255,255,255,.06);font-size:11px;text-align:right;font-family:DM Mono,monospace;font-weight:600">${fm(c.pmt)}</td></tr>`;}).join('');
+  const earlyHTML=s.earlyOn?`<div class="p-card"><div class="sec-label">⚡ EARLY PAYOFF</div><div class="ep-grid">${[{l:'30-DAY',p:.5},{l:'60-DAY',p:.3},{l:'90-DAY',p:.1}].map((e,i,a)=>{const sv=interest*e.p,po=total-sv,bp=Math.round((e.p/a[0].p)*100);return`<div class="ep-tile"><div class="ep-day">${e.l}</div><div class="ep-amt">${fm(po)}</div><div class="ep-save">Save ${fm(sv)}</div><div class="ep-bar"><div class="ep-bar-fill" style="width:${bp}%"></div></div></div>`;}).join('')}</div></div>`:'';
+  const refiHTML=s.refiOn?`<div class="p-card"><div class="sec-label">🔄 REFI SUMMARY</div><div class="refi-row"><span class="refi-key">Balance at midpoint</span><span class="refi-val">${fm(total*.5)}</span></div><div class="refi-row"><span class="refi-key">Cash to you</span><span class="refi-val g">${s.amt>total*.5?fm(s.amt-total*.5):'N/A'}</span></div></div>`:'';
   return`<div style="background:var(--navy)"><div class="p-header"><div class="p-logo"><div class="p-logo-mark">C</div><div><div class="p-logo-name">Clear Capital</div><div class="p-logo-sub">FINANCING SOLUTIONS</div></div></div><div class="p-badge">PRE-APPROVED</div></div><div class="p-hero"><div class="p-eyebrow">CONGRATULATIONS</div><div class="p-biz">${s.biz||'Business Name'}</div><div class="p-sub">Your personalized offer is ready.</div></div><div class="p-main"><div class="p-card"><div style="text-align:center;font-size:9px;letter-spacing:.14em;color:var(--slate3);font-weight:700;margin-bottom:6px">FUNDING AMOUNT</div><div class="amt-fig">${fm(s.amt)}</div><div class="metrics"><div class="m-tile hi"><div class="m-val">${fm(pmt)}</div><div class="m-lbl">${s.selFreq.toUpperCase()} PMT</div></div><div class="m-tile"><div class="m-val">${fm(total)}</div><div class="m-lbl">TOTAL PAYBACK</div></div><div class="m-tile"><div class="m-val">${s.factor.toFixed(2)}×</div><div class="m-lbl">FACTOR</div></div></div></div><div class="p-card"><div class="sec-label">TERMS</div><div class="chip-row" style="margin-bottom:10px">${termBtns}</div><div class="sec-label">FREQUENCY</div><div class="chip-row">${freqBtns}</div><table style="width:100%;border-collapse:collapse;margin-top:12px">${termRows}</table></div>${earlyHTML}${refiHTML}</div></div>`;
 }
 
@@ -499,7 +499,7 @@ function refreshAll(){readInputs();$('previewShell').innerHTML=renderPortal(S);}
 
 async function saveOffer(){
   readInputs();
-  if(!S.biz||S.biz==='Your Business'){showToast('? Enter a business name first');return;}
+  if(!S.biz||S.biz==='Your Business'){showToast('⚠ Enter a business name first');return;}
   const btn=$('saveBtn');btn.disabled=true;$('saveBtnTxt').textContent='Saving…';
   const editingId=$('editingOfferId').value;
   const offerId=editingId||genId();
@@ -526,12 +526,12 @@ async function saveOffer(){
     $('saveBtnTxt').textContent='Update Offer';
     openModal('saveModal');
     loadSavedOffers();
-    showToast(editingId?'? Offer updated!':'? Offer saved!');
-  } catch(err){showToast('? Error saving. Check Supabase config.');console.error(err);}
+    showToast(editingId?'✓ Offer updated!':'✓ Offer saved!');
+  } catch(err){showToast('⚠ Error saving. Check Supabase config.');console.error(err);}
   btn.disabled=false;
 }
 
-function copyOfferLink(){navigator.clipboard.writeText($('savedOfferLink').textContent).then(()=>showToast('? Link copied!'));}
+function copyOfferLink(){navigator.clipboard.writeText($('savedOfferLink').textContent).then(()=>showToast('✓ Link copied!'));}
 
 async function loadSavedOffers(){
   try{
@@ -539,7 +539,7 @@ async function loadSavedOffers(){
     const list=$('savedOffersList'),none=$('noOffers');
     if(!data||!data.length){list.innerHTML='';none.style.display='block';return;}
     none.style.display='none';
-    list.innerHTML=data.map(o=>`<div class="saved-offer"><div class="saved-offer-info"><div class="saved-offer-biz">${o.biz}</div><div class="saved-offer-meta">${o.fin_type} · $${o.max_amt.toLocaleString()} max · ${o.factor}x</div><div class="saved-offer-id">ID: ${o.offer_id}</div></div><div class="saved-btns"><button class="saved-btn edit" onclick='loadOffer(${JSON.stringify(o)})'>Edit</button><button class="saved-btn copy" onclick="navigator.clipboard.writeText('${PORTAL_BASE}/offer/${o.offer_id}').then(()=>showToast('? Copied!'))">Copy</button><button class="saved-btn del" onclick="deleteOffer('${o.offer_id}')">Del</button></div></div>`).join('');
+    list.innerHTML=data.map(o=>`<div class="saved-offer"><div class="saved-offer-info"><div class="saved-offer-biz">${o.biz}</div><div class="saved-offer-meta">${o.fin_type} · $${o.max_amt.toLocaleString()} max · ${o.factor}x</div><div class="saved-offer-id">ID: ${o.offer_id}</div></div><div class="saved-btns"><button class="saved-btn edit" onclick='loadOffer(${JSON.stringify(o)})'>Edit</button><button class="saved-btn copy" onclick="navigator.clipboard.writeText('${PORTAL_BASE}/offer/${o.offer_id}').then(()=>showToast('✓ Copied!'))">Copy</button><button class="saved-btn del" onclick="deleteOffer('${o.offer_id}')">Del</button></div></div>`).join('');
   }catch(err){console.error(err);}
 }
 
@@ -558,13 +558,13 @@ function newOffer(){$('editingOfferId').value='';$('builderTitle').textContent='
 
 function openSendModal(){
   const editingId=$('editingOfferId').value;
-  if(!editingId){showToast('? Save the offer first to get a link');return;}
+  if(!editingId){showToast('⚠ Save the offer first to get a link');return;}
   const{total,pmt}=calc(S.amt,S.selTerm,S.selFreq,S.factor);
   const link=`${PORTAL_BASE}/offer/${editingId}`;
   $('sf_subject').value=`Your Pre-Approved Offer — ${S.biz}`;
   $('sf_biz').value=S.biz;$('sf_link').value=link;
   $('sf_details').value=`Business: ${S.biz}\nType: ${S.finType}\nAmount: ${fm(S.amt)}\nTerm: ${S.selTerm} months\nFrequency: ${S.selFreq}\nFactor: ${S.factor.toFixed(2)}x\nTotal Payback: ${fm(total)}\nPer Payment: ${fm(pmt)}\nLink: ${link}`;
-  $('sf_preview').innerHTML=`<b style="color:#fff">${S.biz}</b><br>${S.finType} · ${fm(S.amt)} · ${S.selTerm} months · ${S.selFreq}<br>Factor ${S.factor.toFixed(2)}x · Payback ${fm(total)} · ${fm(pmt)}/${S.selFreq.toLowerCase()}<br><span style="color:var(--em)">?? ${link}</span>`;
+  $('sf_preview').innerHTML=`<b style="color:#fff">${S.biz}</b><br>${S.finType} · ${fm(S.amt)} · ${S.selTerm} months · ${S.selFreq}<br>Factor ${S.factor.toFixed(2)}x · Payback ${fm(total)} · ${fm(pmt)}/${S.selFreq.toLowerCase()}<br><span style="color:var(--em)">🔗 ${link}</span>`;
   openModal('sendModal');
 }
 function resetSendModal(){$('sendSuccess').style.display='none';$('sendFormWrap').style.display='block';$('sendBtn').disabled=false;$('sendBtn').textContent='Send Approval Email';}
@@ -572,7 +572,7 @@ function resetSendModal(){$('sendSuccess').style.display='none';$('sendFormWrap'
 async function handleSend(e){
   e.preventDefault();const btn=$('sendBtn'),err=$('sendErr');btn.disabled=true;btn.textContent='Sending…';err.style.display='none';
   try{const res=await fetch('https://formsubmit.co/mark@clearcapfund.com',{method:'POST',body:new FormData($('sendForm')),headers:{Accept:'application/json'}});
-  if(res.ok){$('sendFormWrap').style.display='none';$('sendSuccess').style.display='block';showToast('? Sent!');}
+  if(res.ok){$('sendFormWrap').style.display='none';$('sendSuccess').style.display='block';showToast('✓ Sent!');}
   else{err.style.display='block';btn.disabled=false;btn.textContent='Try Again';}}
   catch{err.style.display='block';btn.disabled=false;btn.textContent='Try Again';}
 }
