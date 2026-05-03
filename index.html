@@ -3,319 +3,490 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Clear Capital • Offer Builder</title>
+<title>Clear Capital • CRM</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--navy:#0a1729;--em:#00d4aa;--em2:#00b891;--amber:#f59e0b;--slate3:#94a3b8;--slate4:#64748b;--slate6:#1e293b}
+:root{--navy:#0a1729;--navy2:#0d1e35;--em:#00d4aa;--em2:#00b891;--amber:#f59e0b;--red:#ef4444;--s3:#94a3b8;--s4:#64748b;--s5:#334155;--s6:#1e293b}
 html,body{height:100%;font-family:'DM Sans',sans-serif}
-body{background:#020c18;color:#fff;overflow:hidden}
-#loginScreen{position:fixed;inset:0;background:#020c18;display:flex;align-items:center;justify-content:center;z-index:9999}
-.login-box{background:#0d1b2e;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:40px;width:100%;max-width:380px;text-align:center}
-.login-logo{width:48px;height:48px;border-radius:12px;background:var(--em);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:22px;color:var(--navy);margin:0 auto 16px}
-.login-title{font-size:22px;font-weight:700;margin-bottom:6px}
-.login-sub{font-size:13px;color:var(--slate3);margin-bottom:24px}
-.login-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:13px 16px;color:#fff;font-size:15px;font-family:inherit;outline:none;margin-bottom:12px;text-align:center;letter-spacing:.1em}
-.login-input:focus{border-color:var(--em)}
-.login-btn{width:100%;padding:14px;border-radius:12px;background:var(--em);color:var(--navy);font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit}
-.login-err{font-size:12px;color:#fca5a5;margin-top:8px;display:none}
-#builderView{display:none;flex;height:100vh}
-.left-panel{width:400px;min-width:340px;background:#0d1b2e;border-right:1px solid rgba(255,255,255,.07);overflow-y:auto;flex-shrink:0}
-.left-inner{padding:28px 24px 40px}
-.builder-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px}
-.builder-logo-mark{width:36px;height:36px;border-radius:10px;background:var(--em);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:var(--navy)}
-.builder-logo-name{font-size:16px;font-weight:600}
-.builder-logo-sub{font-size:10px;color:var(--em);letter-spacing:.14em;font-weight:600;margin-top:1px}
-.left-panel h1{font-size:20px;font-weight:700;margin-bottom:22px;letter-spacing:-.03em}
-.field-label{font-size:11px;color:var(--slate3);letter-spacing:.08em;font-weight:600;margin-bottom:7px;display:block}
-.field-group{margin-bottom:18px}
-.field-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:11px 16px;color:#fff;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s}
-.field-input:focus{border-color:var(--em)}
-.field-input::placeholder{color:var(--slate4)}
-.pill-row{display:flex;gap:6px}
-.pill{flex:1;padding:9px 6px;border-radius:10px;font-size:12px;font-weight:600;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--slate3);cursor:pointer;transition:all .2s;text-align:center}
-.pill.active{background:var(--em);color:var(--navy);border-color:var(--em)}
-.freq-row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.freq-btn{padding:9px 6px;border-radius:10px;font-size:12px;font-weight:600;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--slate3);cursor:pointer;transition:all .2s;text-align:center}
-.freq-btn.active{background:rgba(0,212,170,.15);border-color:var(--em);color:var(--em)}
-.b-slider-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--slate4);margin-bottom:8px}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:5px;outline:none;cursor:pointer;background:rgba(255,255,255,.1)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--navy);border:3px solid var(--em);box-shadow:0 0 0 3px rgba(0,212,170,.2);cursor:pointer}
-input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--navy);border:3px solid var(--em);cursor:pointer}
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px}
-.toggle-label{font-size:13px;font-weight:500}
-.toggle-switch{position:relative;width:42px;height:24px;flex-shrink:0}
-.toggle-switch input{opacity:0;width:0;height:0}
-.toggle-slider{position:absolute;inset:0;border-radius:24px;background:rgba(255,255,255,.1);transition:.3s;cursor:pointer}
-.toggle-slider:before{content:'';position:absolute;width:16px;height:16px;left:4px;top:4px;border-radius:50%;background:var(--slate4);transition:.3s}
-.toggle-switch input:checked+.toggle-slider{background:rgba(0,212,170,.2)}
-.toggle-switch input:checked+.toggle-slider:before{transform:translateX(18px);background:var(--em)}
-.refi-sub{padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;margin-top:-4px;margin-bottom:10px;font-size:11px;color:var(--slate4);line-height:1.6}
-.action-btns{margin-top:24px;display:flex;flex-direction:column;gap:8px}
-.btn-em{width:100%;padding:14px;border-radius:12px;background:var(--em);color:var(--navy);font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit}
+body{background:#020c18;color:#fff;overflow-x:hidden}
+
+/* ── AUTH ── */
+#authScreen{position:fixed;inset:0;background:#020c18;display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:0}
+.auth-box{background:#0d1b2e;border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:44px;width:100%;max-width:420px}
+.auth-logo{display:flex;align-items:center;gap:12px;margin-bottom:28px;justify-content:center}
+.auth-logo-mark{width:44px;height:44px;border-radius:11px;background:var(--em);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:var(--navy)}
+.auth-title{font-size:24px;font-weight:700;text-align:center;margin-bottom:6px}
+.auth-sub{font-size:13px;color:var(--s3);text-align:center;margin-bottom:28px}
+.auth-tab-row{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:10px;padding:4px;margin-bottom:24px}
+.auth-tab{flex:1;padding:9px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:none;color:var(--s3);font-family:inherit;transition:all .2s;text-align:center}
+.auth-tab.active{background:var(--em);color:var(--navy)}
+.auth-label{font-size:11px;color:var(--s3);letter-spacing:.06em;font-weight:600;margin-bottom:6px;display:block;text-transform:uppercase}
+.auth-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:12px 16px;color:#fff;font-size:14px;font-family:inherit;outline:none;transition:border-color .2s;margin-bottom:14px}
+.auth-input:focus{border-color:var(--em)}
+.auth-input::placeholder{color:var(--s4)}
+.auth-btn{width:100%;padding:14px;border-radius:11px;background:var(--em);color:var(--navy);font-size:15px;font-weight:700;border:none;cursor:pointer;font-family:inherit;transition:all .2s;margin-top:4px}
+.auth-btn:hover{background:var(--em2)}
+.auth-btn:disabled{opacity:.5;cursor:not-allowed}
+.auth-err{font-size:12px;color:#fca5a5;margin-top:8px;text-align:center;display:none}
+.auth-msg{font-size:12px;color:var(--em);margin-top:8px;text-align:center;display:none}
+
+/* ── APP LAYOUT ── */
+#appScreen{display:none;height:100vh;flex-direction:row}
+.sidebar{width:240px;min-width:240px;background:#0d1b2e;border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;height:100vh;overflow-y:auto}
+.sidebar-logo{padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sidebar-logo-inner{display:flex;align-items:center;gap:10px}
+.sidebar-logo-mark{width:34px;height:34px;border-radius:9px;background:var(--em);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--navy)}
+.sidebar-logo-name{font-size:15px;font-weight:700;font-family:'Space Grotesk',sans-serif}
+.sidebar-logo-sub{font-size:9px;color:var(--em);letter-spacing:.12em;font-weight:600}
+.sidebar-user{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sidebar-user-name{font-size:13px;font-weight:600;color:#fff}
+.sidebar-user-role{font-size:10px;color:var(--em);letter-spacing:.08em;font-weight:600;text-transform:uppercase}
+.sidebar-nav{padding:12px 10px;flex:1}
+.nav-section{font-size:9px;letter-spacing:.14em;color:var(--s4);font-weight:700;padding:8px 10px 6px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:all .2s;margin-bottom:2px;font-size:13px;font-weight:500;color:var(--s3);border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.nav-item:hover{background:rgba(255,255,255,.05);color:#fff}
+.nav-item.active{background:rgba(0,212,170,.1);color:var(--em);border:1px solid rgba(0,212,170,.15)}
+.nav-item svg{flex-shrink:0;opacity:.7}
+.nav-item.active svg{opacity:1}
+.sidebar-footer{padding:16px 10px;border-top:1px solid rgba(255,255,255,.06)}
+
+/* ── MAIN CONTENT ── */
+.main-content{flex:1;overflow-y:auto;background:#020c18}
+.page-view{display:none;padding:32px 36px;min-height:100%;animation:fadeIn .3s ease}
+.page-view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.page-title{font-size:24px;font-weight:700;letter-spacing:-.03em;font-family:'Space Grotesk',sans-serif}
+.page-sub{font-size:13px;color:var(--s3);margin-top:3px}
+
+/* ── STAT CARDS ── */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+.stat-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;transition:all .2s}
+.stat-card:hover{border-color:rgba(0,212,170,.15)}
+.stat-val{font-size:28px;font-weight:700;font-family:'Space Grotesk',sans-serif;letter-spacing:-.03em;color:var(--em)}
+.stat-lbl{font-size:11px;color:var(--s3);font-weight:600;letter-spacing:.06em;margin-top:5px;text-transform:uppercase}
+.stat-card.amber .stat-val{color:var(--amber)}
+.stat-card.white .stat-val{color:#fff}
+
+/* ── TABLE ── */
+.table-wrap{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden}
+.table-toolbar{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06);gap:12px}
+.search-input{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:9px;padding:9px 14px;color:#fff;font-size:13px;font-family:inherit;outline:none;width:260px;transition:border-color .2s}
+.search-input:focus{border-color:var(--em)}
+.search-input::placeholder{color:var(--s4)}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:10px;letter-spacing:.1em;color:var(--s4);font-weight:700;text-align:left;padding:12px 20px;border-bottom:1px solid rgba(255,255,255,.06);text-transform:uppercase}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.03)}
+tbody td{padding:14px 20px;font-size:13px;color:#fff}
+.stage-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.stage-new{background:rgba(100,116,139,.15);color:#94a3b8;border:1px solid rgba(100,116,139,.2)}
+.stage-sent{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
+.stage-docs{background:rgba(59,130,246,.1);color:#60a5fa;border:1px solid rgba(59,130,246,.2)}
+.stage-received{background:rgba(139,92,246,.1);color:#a78bfa;border:1px solid rgba(139,92,246,.2)}
+.stage-funded{background:rgba(0,212,170,.1);color:var(--em);border:1px solid rgba(0,212,170,.2)}
+.stage-declined{background:rgba(239,68,68,.1);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+.empty-state{text-align:center;padding:60px 20px;color:var(--s3)}
+.empty-icon{font-size:40px;margin-bottom:14px}
+.empty-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:6px}
+.empty-sub{font-size:13px}
+
+/* ── BUTTONS ── */
+.btn-em{padding:10px 18px;border-radius:10px;background:var(--em);color:var(--navy);font-size:13px;font-weight:700;border:none;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;font-family:inherit}
 .btn-em:hover{background:var(--em2)}
-.btn-em:disabled{opacity:.5;cursor:not-allowed}
-.btn-white{width:100%;padding:13px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;font-family:inherit}
-.btn-white:hover{background:rgba(255,255,255,.13)}
-.right-panel{flex:1;background:#020c18;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:32px 24px 60px}
-.preview-label{font-size:10px;letter-spacing:.18em;color:var(--slate4);font-weight:600;margin-bottom:16px}
-.preview-shell{width:100%;max-width:480px;background:var(--navy);border-radius:24px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.07)}
-.p-header{padding:16px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(10,23,41,.8)}
-.p-logo{display:flex;align-items:center;gap:10px}
-.p-logo-mark{width:32px;height:32px;border-radius:8px;background:var(--em);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:var(--navy)}
-.p-logo-name{font-size:14px;font-weight:600}
-.p-logo-sub{font-size:9px;color:var(--em);letter-spacing:.12em;font-weight:600}
-.p-badge{background:rgba(0,212,170,.15);border:1px solid rgba(0,212,170,.3);color:var(--em);padding:5px 12px;border-radius:100px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:5px}
-.p-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--em);display:block;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.p-hero{padding:28px 20px 20px;text-align:center}
-.p-eyebrow{font-size:10px;letter-spacing:.16em;color:var(--em);font-weight:700;margin-bottom:10px}
-.p-biz{font-size:clamp(20px,4vw,30px);font-weight:700;letter-spacing:-.03em;margin-bottom:6px}
-.p-sub{font-size:13px;color:var(--slate3);font-weight:300}
-.p-main{padding:0 14px 32px}
-.p-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:14px;padding:18px;margin-bottom:10px}
-.sec-label{font-size:9px;letter-spacing:.14em;color:var(--slate3);font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.08),transparent)}
-.amt-fig{font-size:clamp(36px,7vw,52px);font-weight:700;background:linear-gradient(135deg,#fff 30%,var(--em) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;line-height:1;margin-bottom:6px}
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
-.m-tile{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 8px;text-align:center}
-.m-tile.hi{border-color:rgba(0,212,170,.3);background:rgba(0,212,170,.06)}
-.m-val{font-size:16px;font-weight:700;font-family:'DM Mono',monospace;color:#fff}
-.m-tile.hi .m-val{color:var(--em)}
-.m-lbl{font-size:8px;letter-spacing:.1em;color:var(--slate3);font-weight:600;margin-top:3px}
-.chip-row{display:flex;gap:5px;flex-wrap:wrap}
-.chip{padding:6px 12px;border-radius:100px;font-size:11px;font-weight:500;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--slate3);white-space:nowrap}
-.chip.active{background:var(--em);color:var(--navy);border-color:var(--em);font-weight:700}
-.ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.ep-tile{border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:12px 8px;text-align:center;background:rgba(255,255,255,.03)}
-.ep-day{font-size:8px;letter-spacing:.1em;color:var(--em);font-weight:700;margin-bottom:6px}
-.ep-amt{font-size:13px;font-weight:700;font-family:'DM Mono',monospace}
-.ep-save{font-size:9px;color:var(--em);margin-top:3px}
-.ep-bar{height:2px;border-radius:2px;margin-top:8px;background:rgba(0,212,170,.2)}
-.ep-bar-fill{height:100%;border-radius:2px;background:var(--em)}
-.refi-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:11px}
-.refi-row:last-child{border-bottom:none}
-.refi-key{color:var(--slate3)}
-.refi-val{font-weight:700;font-family:'DM Mono',monospace}
-.refi-val.g{color:var(--em)}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.btn-white{padding:10px 18px;border-radius:10px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:7px;font-family:inherit}
+.btn-white:hover{background:rgba(255,255,255,.11)}
+.btn-red{padding:8px 14px;border-radius:9px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#fca5a5;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
+
+/* ── DEAL DETAIL ── */
+.deal-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:20px}
+.detail-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:24px;margin-bottom:16px}
+.detail-card-title{font-size:11px;letter-spacing:.12em;color:var(--em);font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:8px;text-transform:uppercase}
+.detail-card-title::after{content:'';flex:1;height:1px;background:rgba(0,212,170,.1)}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.detail-row:last-child{border-bottom:none}
+.detail-key{font-size:12px;color:var(--s3)}
+.detail-val{font-size:13px;font-weight:600;font-family:'DM Mono',monospace}
+.detail-val.em{color:var(--em)}
+.stage-select{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;padding:8px 12px;color:#fff;font-size:13px;font-family:inherit;outline:none;cursor:pointer;width:100%}
+.stage-select option{background:#0d1b2e}
+.notes-textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:10px;padding:12px;color:#fff;font-size:13px;font-family:inherit;outline:none;resize:none;line-height:1.6;transition:border-color .2s}
+.notes-textarea:focus{border-color:var(--em)}
+
+/* ── MODALS ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
 .modal-overlay.open{display:flex}
-.modal{background:#0e1f36;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;width:100%;max-width:460px;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto}
+.modal{background:#0d1b2e;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;width:100%;max-width:500px;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
-.mhdr{display:flex;align-items:center;gap:12px;margin-bottom:20px}
-.micon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.mtitle{font-size:18px;font-weight:700}
-.msub{font-size:12px;color:var(--slate3);margin-top:2px}
-.ml{font-size:11px;color:var(--slate3);letter-spacing:.05em;font-weight:600;margin-bottom:6px;display:block}
-.mi{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s;margin-bottom:12px}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-title{font-size:18px;font-weight:700}
+.modal-close{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.07);border:none;color:var(--s3);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.ml{font-size:11px;color:var(--s3);letter-spacing:.05em;font-weight:600;margin-bottom:6px;display:block;margin-top:12px;text-transform:uppercase}
+.mi{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s;margin-bottom:4px}
 .mi:focus{border-color:var(--em)}
-.mi::placeholder{color:var(--slate4)}
-.mnote{font-size:11px;color:var(--slate4);line-height:1.6;padding:10px 12px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);margin-bottom:16px}
-.mbtns{display:flex;gap:8px}
+.mi::placeholder{color:var(--s4)}
+select.mi option{background:#0d1b2e}
+.mbtns{display:flex;gap:8px;margin-top:20px}
 .mbtn-p{flex:1;padding:13px;border-radius:10px;background:var(--em);color:var(--navy);font-weight:700;font-size:14px;border:none;cursor:pointer;font-family:inherit}
-.mbtn-p:disabled{opacity:.5;cursor:not-allowed}
-.mbtn-c{padding:13px 18px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--slate3);font-size:14px;cursor:pointer;font-family:inherit}
+.mbtn-p:hover{background:var(--em2)}
+.mbtn-c{padding:13px 18px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--s3);font-size:14px;cursor:pointer;font-family:inherit}
 .mbtn-c:hover{background:rgba(255,255,255,.1);color:#fff}
 .ferr{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px 12px;font-size:12px;color:#fca5a5;margin-bottom:12px;display:none}
-.form-success{text-align:center;padding:28px 16px}
-.form-success .si{font-size:44px;margin-bottom:14px}
-.form-success h3{font-size:18px;font-weight:700;color:var(--em);margin-bottom:6px}
-.form-success p{font-size:13px;color:var(--slate3);line-height:1.6}
-.offer-id-box{background:rgba(0,212,170,.08);border:1px solid rgba(0,212,170,.2);border-radius:10px;padding:14px;margin:12px 0;text-align:center}
-.offer-id-box .oid{font-size:22px;font-weight:700;font-family:'DM Mono',monospace;color:var(--em);letter-spacing:.05em}
-.offer-id-box .olink{font-size:11px;color:var(--slate3);margin-top:4px;word-break:break-all}
+
+/* ADMIN */
+.rep-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:18px 20px;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.rep-info{display:flex;align-items:center;gap:14px}
+.rep-avatar{width:38px;height:38px;border-radius:10px;background:rgba(0,212,170,.15);border:1px solid rgba(0,212,170,.2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:var(--em)}
+.rep-name{font-size:14px;font-weight:600}
+.rep-email{font-size:11px;color:var(--s3);margin-top:2px}
+.role-badge{padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.role-admin{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.2)}
+.role-rep{background:rgba(0,212,170,.1);color:var(--em);border:1px solid rgba(0,212,170,.15)}
+
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--em);color:var(--navy);font-weight:700;font-size:13px;padding:12px 24px;border-radius:100px;opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none;z-index:1000;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-.saved-offer{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.saved-offer-info{flex:1;min-width:0}
-.saved-offer-biz{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.saved-offer-meta{font-size:11px;color:var(--slate3);margin-top:2px}
-.saved-offer-id{font-size:11px;color:var(--em);font-family:'DM Mono',monospace;margin-top:2px}
-.saved-btns{display:flex;gap:6px;flex-shrink:0}
-.saved-btn{padding:6px 10px;border-radius:8px;font-size:11px;font-weight:600;border:none;cursor:pointer;font-family:inherit}
-.saved-btn.edit{background:rgba(0,212,170,.15);color:var(--em)}
-.saved-btn.copy{background:rgba(255,255,255,.08);color:#fff}
-.saved-btn.del{background:rgba(239,68,68,.1);color:#fca5a5}
+
+@media(max-width:900px){
+  .sidebar{display:none}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .deal-grid{grid-template-columns:1fr}
+  .page-view{padding:20px}
+}
 </style>
 </head>
 <body>
 
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="login-logo">C</div>
-    <div class="login-title">Clear Capital</div>
-    <div class="login-sub">Offer Builder — Staff Only</div>
-    <input class="login-input" id="loginPass" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')doLogin()">
-    <button class="login-btn" onclick="doLogin()">Sign In</button>
-    <div class="login-err" id="loginErr">Incorrect password. Try again.</div>
-  </div>
-</div>
-
-<div id="builderView" style="display:none;flex-direction:row;height:100vh">
-  <div class="left-panel">
-    <div class="left-inner">
-      <div class="builder-logo">
-        <div class="builder-logo-mark">C</div>
-        <div><div class="builder-logo-name">Clear Capital</div><div class="builder-logo-sub">OFFER BUILDER</div></div>
-      </div>
-      <h1 id="builderTitle">Create New Offer</h1>
-      <input type="hidden" id="editingOfferId">
-      <div class="field-group">
-        <label class="field-label">BUSINESS NAME</label>
-        <input id="b_biz" class="field-input" type="text" placeholder="Business name" oninput="refreshAll()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">FINANCING TYPE</label>
-        <div class="pill-row">
-          <button class="pill active" onclick="setPillType(this,'Business Loan')">Business Loan</button>
-          <button class="pill" onclick="setPillType(this,'Revenue-Based')">Revenue-Based</button>
-          <button class="pill" onclick="setPillType(this,'Equipment')">Equipment</button>
-        </div>
-      </div>
-      <div class="field-group">
-        <label class="field-label">MAX APPROVAL AMOUNT</label>
-        <input id="b_max" class="field-input" type="text" value="100,000" oninput="fmtInput(this);refreshAll()" style="font-size:20px;font-weight:700">
-      </div>
-      <div class="field-group">
-        <div class="b-slider-labels">
-          <span class="field-label" style="margin:0">SELECTED AMOUNT</span>
-          <span id="b_sliderLabel" style="color:var(--em);font-weight:700;font-size:13px">$75,000</span>
-        </div>
-        <input id="b_slider" type="range" min="5000" max="100000" step="1000" value="75000" oninput="builderSliderMove()">
-        <div class="b-slider-labels" style="margin-top:6px"><span>$5,000</span><span id="b_sliderMax">$100,000</span></div>
-      </div>
-      <div class="field-group">
-        <label class="field-label">FACTOR RATE</label>
-        <input id="b_factor" class="field-input" type="number" step="0.01" value="1.18" oninput="refreshAll()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">TERM OPTIONS (months, comma-separated)</label>
-        <input id="b_terms" class="field-input" type="text" value="6, 12, 18, 24" oninput="refreshAll()">
-      </div>
-      <div class="field-group">
-        <label class="field-label">PAYMENT FREQUENCIES</label>
-        <div class="freq-row">
-          <button class="freq-btn active" onclick="toggleFreq(this)" data-freq="Daily">Daily</button>
-          <button class="freq-btn" onclick="toggleFreq(this)" data-freq="Weekly">Weekly</button>
-          <button class="freq-btn" onclick="toggleFreq(this)" data-freq="Monthly">Monthly</button>
-        </div>
-      </div>
-      <div class="toggle-row">
-        <span class="toggle-label">Refi / Payoff Section</span>
-        <label class="toggle-switch"><input type="checkbox" id="b_refiOn" checked onchange="refreshAll()"><span class="toggle-slider"></span></label>
-      </div>
-      <div class="refi-sub">Auto-calculated at 50% of total payback after half the term.</div>
-      <div class="toggle-row">
-        <span class="toggle-label">Early Payoff Discounts</span>
-        <label class="toggle-switch"><input type="checkbox" id="b_earlyOn" checked onchange="refreshAll()"><span class="toggle-slider"></span></label>
-      </div>
-
-      <!-- ── DOCUMENT REQUIREMENTS ── -->
-      <div class="field-group" style="margin-top:8px">
-        <label class="field-label">REQUIRED DOCUMENTS</label>
-        <div id="docToggles" style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px"></div>
-        <div style="display:flex;gap:6px;margin-top:4px">
-          <input id="customDocInput" class="field-input" type="text" placeholder="Custom document name…" style="font-size:12px;padding:8px 12px;flex:1">
-          <button onclick="addCustomDoc()" style="padding:8px 14px;border-radius:10px;background:rgba(0,212,170,.15);border:1px solid rgba(0,212,170,.3);color:var(--em);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap">+ Add</button>
-        </div>
-      </div>
-
-      <!-- ── STIPULATIONS ── -->
-      <div class="field-group">
-        <label class="field-label">STIPULATIONS</label>
-        <div id="stipList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px"></div>
-        <button type="button" id="addStipBtn" style="width:100%;padding:10px;border-radius:10px;background:rgba(255,255,255,.04);border:2px dashed rgba(255,255,255,.1);color:var(--slate3);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s">+ Add Stipulation</button>
-      </div>
-      <div class="action-btns">
-        <button class="btn-em" id="saveBtn" onclick="saveOffer()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-          <span id="saveBtnTxt">Save & Get Link</span>
-        </button>
-        <button class="btn-white" onclick="openSendModal()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          Send Approval to Client
-        </button>
-        <button class="btn-white" onclick="newOffer()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
-          New Offer
-        </button>
-        <button class="btn-white" onclick="openModal('savedOffersModal')">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
-          View All Saved Offers
-        </button>
+<!-- ── AUTH SCREEN ── -->
+<div id="authScreen">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="auth-logo-mark">C</div>
+      <div>
+        <div style="font-size:18px;font-weight:700;font-family:'Space Grotesk',sans-serif">Clear Capital</div>
+        <div style="font-size:9px;color:var(--em);letter-spacing:.14em;font-weight:600">TEAM PORTAL</div>
       </div>
     </div>
-  </div>
-  <div class="right-panel">
-    <div class="preview-label">LIVE MERCHANT PREVIEW</div>
-    <div class="preview-shell" id="previewShell"></div>
+    <div class="auth-tab-row">
+      <button class="auth-tab active" onclick="switchAuthTab('login')">Sign In</button>
+      <button class="auth-tab" onclick="switchAuthTab('signup')">Create Account</button>
+    </div>
+    <!-- LOGIN -->
+    <div id="loginForm">
+      <label class="auth-label">Email</label>
+      <input class="auth-input" id="loginEmail" type="email" placeholder="you@clearcapfund.com">
+      <label class="auth-label">Password</label>
+      <input class="auth-input" id="loginPassword" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="auth-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
+      <div class="auth-err" id="loginErr"></div>
+    </div>
+    <!-- SIGNUP -->
+    <div id="signupForm" style="display:none">
+      <label class="auth-label">Full Name</label>
+      <input class="auth-input" id="signupName" type="text" placeholder="Mark Rosenberg">
+      <label class="auth-label">Email</label>
+      <input class="auth-input" id="signupEmail" type="email" placeholder="you@clearcapfund.com">
+      <label class="auth-label">Password</label>
+      <input class="auth-input" id="signupPassword" type="password" placeholder="Min. 8 characters">
+      <label class="auth-label">Invite Code</label>
+      <input class="auth-input" id="signupCode" type="text" placeholder="Ask admin for invite code">
+      <button class="auth-btn" id="signupBtn" onclick="doSignup()">Create Account</button>
+      <div class="auth-err" id="signupErr"></div>
+      <div class="auth-msg" id="signupMsg"></div>
+    </div>
   </div>
 </div>
 
-<!-- SAVE SUCCESS MODAL -->
-<div class="modal-overlay" id="saveModal">
+<!-- ── APP SCREEN ── -->
+<div id="appScreen" style="display:none;flex-direction:row;height:100vh">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-inner">
+        <div class="sidebar-logo-mark">C</div>
+        <div>
+          <div class="sidebar-logo-name">Clear Capital</div>
+          <div class="sidebar-logo-sub">TEAM PORTAL</div>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-user">
+      <div class="sidebar-user-name" id="sidebarUserName">Loading...</div>
+      <div class="sidebar-user-role" id="sidebarUserRole">rep</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <button class="nav-item active" onclick="showView('dashboard')">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button>
+      <button class="nav-item" onclick="showView('deals')">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        My Deals
+      </button>
+      <button class="nav-item" onclick="showView('offers')">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Offers
+      </button>
+      <button class="nav-item" onclick="showView('builder')" id="builderNavItem">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Offer Builder
+      </button>
+      <div class="nav-section" id="adminNavSection" style="display:none">Admin</div>
+      <button class="nav-item" onclick="showView('team')" id="teamNavItem" style="display:none">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        Team
+      </button>
+      <button class="nav-item" onclick="showView('alldeals')" id="allDealsNavItem" style="display:none">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        All Deals
+      </button>
+    </div>
+    <div class="sidebar-footer">
+      <button class="nav-item" onclick="doSignOut()" style="color:var(--s4)">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- DASHBOARD -->
+    <div class="page-view active" id="view-dashboard">
+      <div class="page-header">
+        <div>
+          <div class="page-title" id="dashGreeting">Good morning</div>
+          <div class="page-sub">Here's your activity overview</div>
+        </div>
+        <button class="btn-em" onclick="openNewDealModal()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          New Deal
+        </button>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-val" id="statTotal">0</div><div class="stat-lbl">Total Deals</div></div>
+        <div class="stat-card amber"><div class="stat-val" id="statPending">0</div><div class="stat-lbl">Pending Docs</div></div>
+        <div class="stat-card"><div class="stat-val" id="statFunded">0</div><div class="stat-lbl">Funded</div></div>
+        <div class="stat-card white"><div class="stat-val" id="statOffers">0</div><div class="stat-lbl">Active Offers</div></div>
+      </div>
+      <div style="margin-bottom:20px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--s3);letter-spacing:.06em;text-transform:uppercase">Recent Deals</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Business</th><th>Merchant</th><th>Amount</th><th>Stage</th><th>Updated</th></tr></thead>
+            <tbody id="recentDealsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- MY DEALS -->
+    <div class="page-view" id="view-deals">
+      <div class="page-header">
+        <div><div class="page-title">My Deals</div><div class="page-sub">Manage your active pipeline</div></div>
+        <button class="btn-em" onclick="openNewDealModal()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          New Deal
+        </button>
+      </div>
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <input class="search-input" type="text" placeholder="Search by business or merchant..." id="dealSearch" oninput="filterDeals()">
+          <div style="display:flex;gap:8px">
+            <select id="stageFilter" class="search-input" style="width:160px" onchange="filterDeals()">
+              <option value="">All Stages</option>
+              <option>New Lead</option>
+              <option>Offer Sent</option>
+              <option>Docs Requested</option>
+              <option>Docs Received</option>
+              <option>Funded</option>
+              <option>Declined</option>
+            </select>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Business</th><th>Merchant</th><th>Amount</th><th>Stage</th><th>Rep</th><th>Date</th><th></th></tr></thead>
+          <tbody id="dealsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DEAL DETAIL -->
+    <div class="page-view" id="view-deal-detail">
+      <div class="page-header">
+        <div>
+          <button class="btn-white" onclick="showView('deals')" style="margin-bottom:10px;padding:7px 14px;font-size:12px">← Back to Deals</button>
+          <div class="page-title" id="dealDetailTitle">Deal Detail</div>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-white" id="detailEditBtn" onclick="openEditDealModal()">Edit</button>
+          <button class="btn-em" id="detailOfferBtn" onclick="goToBuilderForDeal()">Open Builder</button>
+        </div>
+      </div>
+      <div class="deal-grid">
+        <div>
+          <div class="detail-card">
+            <div class="detail-card-title">Deal Information</div>
+            <div id="dealDetailInfo"></div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-title">Notes</div>
+            <textarea class="notes-textarea" id="dealNotes" rows="5" placeholder="Add notes about this deal..." onchange="saveDealNotes()"></textarea>
+            <button class="btn-em" style="margin-top:10px;padding:9px 16px;font-size:12px" onclick="saveDealNotes()">Save Notes</button>
+          </div>
+        </div>
+        <div>
+          <div class="detail-card">
+            <div class="detail-card-title">Pipeline Stage</div>
+            <select class="stage-select" id="dealStageSelect" onchange="updateDealStage()"></select>
+            <div id="dealStageBadge" style="margin-top:12px;text-align:center"></div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-title">Linked Offers</div>
+            <div id="linkedOffers"></div>
+          </div>
+          <div class="detail-card">
+            <div class="detail-card-title">Quick Actions</div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <button class="btn-white" style="justify-content:center" onclick="goToBuilderForDeal()">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Create / Edit Offer
+              </button>
+              <button class="btn-white" style="justify-content:center" onclick="copyDealOfferLink()">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                Copy Portal Link
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OFFERS -->
+    <div class="page-view" id="view-offers">
+      <div class="page-header">
+        <div><div class="page-title">Offers</div><div class="page-sub">All saved offer links</div></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Business</th><th>Offer ID</th><th>Max Amount</th><th>Factor</th><th>Updated</th><th></th></tr></thead>
+          <tbody id="offersBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- BUILDER (iframe) -->
+    <div class="page-view" id="view-builder" style="padding:0;height:100vh">
+      <iframe id="builderFrame" src="" style="width:100%;height:100%;border:none"></iframe>
+    </div>
+
+    <!-- TEAM (admin only) -->
+    <div class="page-view" id="view-team">
+      <div class="page-header">
+        <div><div class="page-title">Team</div><div class="page-sub">Manage rep accounts</div></div>
+        <button class="btn-em" onclick="openModal('inviteModal')">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+          Add Rep
+        </button>
+      </div>
+      <div id="repList"></div>
+    </div>
+
+    <!-- ALL DEALS (admin only) -->
+    <div class="page-view" id="view-alldeals">
+      <div class="page-header">
+        <div><div class="page-title">All Deals</div><div class="page-sub">Across all reps</div></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-toolbar">
+          <input class="search-input" type="text" placeholder="Search..." id="allDealSearch" oninput="filterAllDeals()">
+          <select id="allRepFilter" class="search-input" style="width:180px" onchange="filterAllDeals()">
+            <option value="">All Reps</option>
+          </select>
+        </div>
+        <table>
+          <thead><tr><th>Business</th><th>Merchant</th><th>Amount</th><th>Stage</th><th>Rep</th><th>Date</th></tr></thead>
+          <tbody id="allDealsBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- NEW DEAL MODAL -->
+<div class="modal-overlay" id="newDealModal">
   <div class="modal">
-    <div class="form-success">
-      <div class="si">🎉</div>
-      <h3>Offer Saved!</h3>
-      <p>Share this link with your client. Edit the offer anytime — they'll see changes instantly on refresh.</p>
-      <div class="offer-id-box">
-        <div class="oid" id="savedOfferId"></div>
-        <div class="olink" id="savedOfferLink"></div>
-      </div>
-      <button class="btn-em" style="margin-top:4px;width:100%" onclick="copyOfferLink()">Copy Link</button>
-      <button class="mbtn-c" style="margin-top:8px;width:100%;padding:12px;border-radius:10px" onclick="closeModal('saveModal')">Close</button>
+    <div class="modal-hdr"><div class="modal-title">New Deal</div><button class="modal-close" onclick="closeModal('newDealModal')">×</button></div>
+    <div class="ferr" id="newDealErr"></div>
+    <label class="ml">Business Name *</label>
+    <input class="mi" id="nd_biz" type="text" placeholder="Sunrise Grill LLC">
+    <label class="ml">Merchant Name *</label>
+    <input class="mi" id="nd_merchant" type="text" placeholder="Jane Smith">
+    <label class="ml">Merchant Email</label>
+    <input class="mi" id="nd_email" type="email" placeholder="jane@business.com">
+    <label class="ml">Merchant Phone</label>
+    <input class="mi" id="nd_phone" type="tel" placeholder="(555) 000-0000">
+    <label class="ml">Funding Amount Requested</label>
+    <input class="mi" id="nd_amount" type="text" placeholder="$75,000">
+    <label class="ml">Stage</label>
+    <select class="mi" id="nd_stage">
+      <option>New Lead</option>
+      <option>Offer Sent</option>
+      <option>Docs Requested</option>
+      <option>Docs Received</option>
+      <option>Funded</option>
+      <option>Declined</option>
+    </select>
+    <div class="mbtns">
+      <button class="mbtn-c" onclick="closeModal('newDealModal')">Cancel</button>
+      <button class="mbtn-p" onclick="createDeal()">Create Deal</button>
     </div>
   </div>
 </div>
 
-<!-- SEND EMAIL MODAL -->
-<div class="modal-overlay" id="sendModal">
+<!-- EDIT DEAL MODAL -->
+<div class="modal-overlay" id="editDealModal">
   <div class="modal">
-    <div id="sendSuccess" style="display:none" class="form-success">
-      <div class="si">🚀</div><h3>Approval sent!</h3>
-      <p>The offer link has been emailed to your client.</p>
-      <button class="mbtn-c" style="margin-top:18px;width:100%" onclick="closeModal('sendModal');resetSendModal()">Close</button>
-    </div>
-    <div id="sendFormWrap">
-      <div class="mhdr"><div class="micon" style="background:rgba(0,212,170,.1)">🚀</div><div><div class="mtitle">Send Approval to Client</div><div class="msub">Deliver the offer link via email</div></div></div>
-      <div class="ferr" id="sendErr">Something went wrong. Please try again.</div>
-      <form id="sendForm" action="https://formsubmit.co/mark@clearcapfund.com" method="POST">
-        <input type="hidden" name="_subject" id="sf_subject">
-        <input type="hidden" name="business_name" id="sf_biz">
-        <input type="hidden" name="offer_link" id="sf_link">
-        <input type="hidden" name="offer_details" id="sf_details">
-        <input type="hidden" name="submission_type" value="Client Approval">
-        <input type="hidden" name="_cc" id="sf_cc">
-        <label class="ml">CLIENT EMAIL</label>
-        <input class="mi" id="sf_email" name="client_email" type="email" placeholder="client@theirbusiness.com" required oninput="document.getElementById('sf_cc').value=this.value">
-        <label class="ml">CLIENT NAME (optional)</label>
-        <input class="mi" name="client_name" type="text" placeholder="Jane Smith">
-        <label class="ml">PERSONAL NOTE (optional)</label>
-        <textarea class="mi" name="personal_note" rows="3" placeholder="Hi Jane, great speaking with you! Here's your pre-approved offer…"></textarea>
-        <div style="background:rgba(0,212,170,.06);border:1px solid rgba(0,212,170,.2);border-radius:10px;padding:12px 14px;margin-bottom:14px">
-          <div style="font-size:10px;letter-spacing:.1em;color:var(--em);font-weight:700;margin-bottom:8px">OFFER SUMMARY</div>
-          <div id="sf_preview" style="font-size:12px;color:var(--slate3);line-height:1.8"></div>
-        </div>
-        <div class="mnote">FormSubmit will email <strong style="color:var(--em)">mark@clearcapfund.com</strong> and CC the client with their portal link.</div>
-        <div class="mbtns">
-          <button type="button" class="mbtn-c" onclick="closeModal('sendModal')">Cancel</button>
-          <button type="submit" class="mbtn-p" id="sendBtn">Send Approval Email</button>
-        </div>
-      </form>
+    <div class="modal-hdr"><div class="modal-title">Edit Deal</div><button class="modal-close" onclick="closeModal('editDealModal')">×</button></div>
+    <label class="ml">Business Name</label>
+    <input class="mi" id="ed_biz" type="text">
+    <label class="ml">Merchant Name</label>
+    <input class="mi" id="ed_merchant" type="text">
+    <label class="ml">Merchant Email</label>
+    <input class="mi" id="ed_email" type="email">
+    <label class="ml">Merchant Phone</label>
+    <input class="mi" id="ed_phone" type="tel">
+    <label class="ml">Funding Amount</label>
+    <input class="mi" id="ed_amount" type="text">
+    <div class="mbtns">
+      <button class="mbtn-c" onclick="closeModal('editDealModal')">Cancel</button>
+      <button class="mbtn-p" onclick="saveEditDeal()">Save Changes</button>
     </div>
   </div>
 </div>
 
-<!-- SAVED OFFERS MODAL -->
-<div class="modal-overlay" id="savedOffersModal">
-  <div class="modal" style="max-width:520px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
-      <div style="font-size:18px;font-weight:700">Saved Offers</div>
-      <button class="mbtn-c" style="padding:8px 14px" onclick="closeModal('savedOffersModal')">Close</button>
+<!-- INVITE REP MODAL -->
+<div class="modal-overlay" id="inviteModal">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-title">Add Rep Account</div><button class="modal-close" onclick="closeModal('inviteModal')">×</button></div>
+    <p style="font-size:13px;color:var(--s3);margin-bottom:16px;line-height:1.6">Share the invite code with your rep. They'll use it when creating their account.</p>
+    <div style="background:rgba(0,212,170,.07);border:1px solid rgba(0,212,170,.2);border-radius:12px;padding:20px;text-align:center;margin-bottom:16px">
+      <div style="font-size:10px;letter-spacing:.12em;color:var(--em);font-weight:700;margin-bottom:8px;text-transform:uppercase">Invite Code</div>
+      <div style="font-size:28px;font-weight:700;font-family:'DM Mono',monospace;color:var(--em);letter-spacing:.1em" id="inviteCodeDisplay">CLEARCAP25</div>
     </div>
-    <div id="savedOffersList"></div>
-    <div id="noOffers" style="text-align:center;color:var(--slate3);font-size:13px;padding:20px;display:none">No saved offers yet.</div>
+    <button class="btn-em" style="width:100%;justify-content:center" onclick="copyInviteCode()">Copy Invite Code</button>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)">
+      <div style="font-size:12px;color:var(--s3);margin-bottom:10px">Or directly set rep role after they sign up:</div>
+      <div id="pendingReps"></div>
+    </div>
+    <div class="mbtns" style="margin-top:12px">
+      <button class="mbtn-c" onclick="closeModal('inviteModal')">Close</button>
+    </div>
   </div>
 </div>
 
@@ -323,261 +494,468 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 <script>
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// 🔧 CONFIG — PASTE YOUR VALUES HERE
+// CONFIG
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const SUPABASE_URL     = 'https://dmhiltzyfxdrcvysisry.supabase.co';
-const SUPABASE_ANON_KEY= 'PASTE_YOUR_ANON_KEY_HERE';
-const PORTAL_BASE      = 'https://portal.theclearcap.com'; // your subdomain
-const BUILDER_PASSWORD = 'clearcap2024'; // change this!
+const SB_URL  = 'https://dmhiltzyfxdrcvysisry.supabase.co';
+const SB_KEY  = 'sb_publishable_axd4IUocVRQPbauHu068uA_DWhupXmV';
+const PORTAL  = 'https://portal.theclearcap.com';
+const INVITE_CODE = 'CLEARCAP25'; // change this
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-function doLogin(){
-  const pass=document.getElementById('loginPass').value;
-  if(pass===BUILDER_PASSWORD){
-    document.getElementById('loginScreen').style.display='none';
-    const bv=document.getElementById('builderView');
-    bv.style.display='flex'; // ── DOCUMENT TOGGLES ──
-const STD_DOCS = [
-  {id:'dl',    icon:'🪪', label:"Driver's License"},
-  {id:'void',  icon:'🏦', label:'Voided Check'},
-  {id:'bank',  icon:'🏦', label:'4 Mo. Bank Statements'},
-  {id:'pl',    icon:'📊', label:'P&L Statement'},
-  {id:'biztax',icon:'📋', label:'Business Tax Returns'},
-  {id:'pertax',icon:'📋', label:'Personal Tax Returns'},
-  {id:'ar',    icon:'📈', label:'Accounts Receivable (AR)'},
-  {id:'proc',  icon:'💳', label:'Processing Statements'},
-  {id:'payoff',icon:'📄', label:'Payoff Letter(s)'},
-  {id:'zero',  icon:'✅', label:'Zero Balance Letter(s)'},
-  {id:'proof', icon:'🏢', label:'Proof of Business'},
-  {id:'app',   icon:'📝', label:'Business Application'},
-];
-let activeDocs = new Set(['dl','void']); // default
-let customDocs = []; // [{id, label}]
-let stipulations = []; // [{id, text, mustAck}]
-let stipCounter = 0;
-let customDocCounter = 0;
-
-function renderDocToggles(){
-  const wrap=document.getElementById('docToggles');
-  if(!wrap) return;
-  const allDocs=[...STD_DOCS,...customDocs.map(c=>({...c,custom:true}))];
-  wrap.innerHTML='';
-  allDocs.forEach(doc=>{
-    const active=activeDocs.has(doc.id);
-    const btn=document.createElement('button');
-    btn.type='button';
-    btn.style.cssText=`display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:100px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s;background:${active?'var(--em)':'rgba(255,255,255,.06)'};border:1px solid ${active?'var(--em)':'rgba(255,255,255,.1)'};color:${active?'var(--navy)':'var(--slate3)'}`;
-    btn.innerHTML=`${doc.icon} ${doc.label}${doc.custom?` <span style="margin-left:4px;font-size:13px;line-height:1;opacity:.8" data-remove="${doc.id}">×</span>`:''}`;
-    btn.addEventListener('click',function(e){
-      const removeId=e.target.dataset?.remove;
-      if(removeId){removeCustomDoc(removeId);return;}
-      if(activeDocs.has(doc.id)) activeDocs.delete(doc.id);
-      else activeDocs.add(doc.id);
-      S.activeDocs=[...activeDocs];
-      renderDocToggles();
-    });
-    wrap.appendChild(btn);
-  });
-}
-
-function addCustomDoc(){
-  const inp = document.getElementById('customDocInput');
-  const label = inp.value.trim();
-  if(!label) return;
-  const id = 'custom_'+(++customDocCounter);
-  customDocs.push({id, icon:'📎', label});
-  activeDocs.add(id);
-  inp.value = '';
-  renderDocToggles();
-  S.customDocs = customDocs;
-}
-
-function removeCustomDoc(id){
-  customDocs = customDocs.filter(d=>d.id!==id);
-  activeDocs.delete(id);
-  renderDocToggles();
-  S.customDocs = customDocs;
-}
-
-// ── STIPULATIONS ──
-function renderStips(){
-  const list = document.getElementById('stipList');
-  if(!stipulations.length){list.innerHTML='<div style="font-size:11px;color:var(--slate4);padding:4px 0">No stipulations added.</div>';return;}
-  list.innerHTML = stipulations.map(s=>`
-    <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px">
-      <textarea oninput="updateStip('${s.id}','text',this.value)" placeholder="Enter stipulation text…"
-        style="width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:8px 12px;color:#fff;font-size:12px;font-family:inherit;outline:none;resize:none;margin-bottom:8px;line-height:1.5"
-        rows="2">${s.text}</textarea>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
-        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:11px;font-weight:600;color:var(--slate3)">
-          <input type="checkbox" ${s.mustAck?'checked':''} onchange="updateStip('${s.id}','mustAck',this.checked)"
-            style="accent-color:var(--em);width:14px;height:14px">
-          Must Acknowledge
-        </label>
-        <button onclick="removeStip('${s.id}')" style="padding:4px 10px;border-radius:6px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#fca5a5;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">Remove</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function addStip(){
-  stipulations.push({id:'stip_'+(++stipCounter), text:'', mustAck:false});
-  renderStips();
-  S.stipulations = stipulations;
-}
-function removeStip(id){stipulations=stipulations.filter(s=>s.id!==id);renderStips();S.stipulations=stipulations;}
-function updateStip(id,key,val){const s=stipulations.find(s=>s.id===id);if(s){s[key]=val;}S.stipulations=stipulations;}
-
-// ── INIT DOCS/STIPS ON LOAD ──
-renderDocToggles();
-renderStips();
-S.activeDocs=[...activeDocs];
-S.customDocs=customDocs;
-S.stipulations=stipulations;
-// Wire add stip button
-const addStipBtn=document.getElementById('addStipBtn');
-if(addStipBtn){
-  addStipBtn.addEventListener('click',addStip);
-  addStipBtn.addEventListener('mouseover',()=>{addStipBtn.style.borderColor='rgba(0,212,170,.3)';addStipBtn.style.color='var(--em)';});
-  addStipBtn.addEventListener('mouseout',()=>{addStipBtn.style.borderColor='rgba(255,255,255,.1)';addStipBtn.style.color='var(--slate3)';});
-} loadSavedOffers();
-  } else {
-    document.getElementById('loginErr').style.display='block';
-  }
-}
-
-async function sbFetch(path, method='GET', body=null){
-  const url = SUPABASE_URL + path;
-  console.log('sbFetch:', method, url);
-  const opts = {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-      'Prefer': method === 'POST' ? 'return=representation' : 'return=minimal'
-    }
-  };
-  if(body) opts.body = JSON.stringify(body);
-  const res = await fetch(url, opts);
-  console.log('sbFetch response status:', res.status);
-  if(res.status === 204 || res.status === 201) return {};
-  const text = await res.text();
-  console.log('sbFetch response body:', text);
-  try{ return JSON.parse(text); }
-  catch{ return {}; }
-}
-
-function genId(){ return Math.random().toString(36).substring(2,8).toUpperCase(); }
-
-const S={biz:'',finType:'Business Loan',max:100000,amt:75000,factor:1.18,terms:[6,12,18,24],freqs:['Daily'],selTerm:12,selFreq:'Daily',refiOn:true,earlyOn:true};
 const $=id=>document.getElementById(id);
-const fm=v=>'$'+Math.round(v).toLocaleString('en-US');
-function fmtInput(el){let r=el.value.replace(/\D/g,'');el.value=r?parseInt(r).toLocaleString('en-US'):'';}
+const fm=v=>v?'$'+Math.round(v).toLocaleString('en-US'):'—';
 function showToast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 function openModal(id){$(id).classList.add('open');}
 function closeModal(id){$(id).classList.remove('open');}
-function calc(amt,term,freq,factor){const total=amt*factor;const p=freq==='Daily'?Math.round(term*22):freq==='Weekly'?Math.round(term*4.33):term;return{total,pmt:total/p,p};}
 
-function setPillType(btn,type){S.finType=type;document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');refreshAll();}
-function toggleFreq(btn){const f=btn.dataset.freq;btn.classList.toggle('active');if(btn.classList.contains('active'))S.freqs.push(f);else S.freqs=S.freqs.filter(x=>x!==f);if(!S.freqs.length){btn.classList.add('active');S.freqs.push(f);}if(!S.freqs.includes(S.selFreq))S.selFreq=S.freqs[0];refreshAll();}
-function builderSliderMove(){S.amt=parseInt($('b_slider').value);$('b_sliderLabel').textContent=fm(S.amt);refreshAll();}
-function readInputs(){S.biz=$('b_biz').value.trim()||'Your Business';S.max=parseInt($('b_max').value.replace(/,/g,''))||100000;S.factor=parseFloat($('b_factor').value)||1.18;S.terms=$('b_terms').value.split(',').map(v=>parseInt(v.trim())).filter(Boolean);if(!S.terms.length)S.terms=[12];S.refiOn=$('b_refiOn').checked;S.earlyOn=$('b_earlyOn').checked;if(!S.terms.includes(S.selTerm))S.selTerm=S.terms[0];$('b_slider').max=S.max;$('b_sliderMax').textContent=fm(S.max);if(S.amt>S.max){S.amt=S.max;$('b_slider').value=S.max;$('b_sliderLabel').textContent=fm(S.max);}}
+let SESSION=null, PROFILE=null, ALL_DEALS=[], ALL_OFFERS=[], ALL_PROFILES=[];
+let currentDeal=null;
 
-function renderPortal(s){
-  const{total,pmt,p:tp}=calc(s.amt,s.selTerm,s.selFreq,s.factor);
-  const interest=total-s.amt;
-  const termBtns=s.terms.map(t=>`<span class="chip${t===s.selTerm?' active':''}">${t} mo</span>`).join('');
-  const freqBtns=s.freqs.map(f=>`<span class="chip${f===s.selFreq?' active':''}">${f}</span>`).join('');
-  const termRows=s.terms.map(t=>{const c=calc(s.amt,t,s.selFreq,s.factor);return`<tr style="${t===s.selTerm?'color:var(--em)':''}"><td style="padding:8px 0;border-top:1px solid rgba(255,255,255,.06);font-size:11px">${t===s.selTerm?'→ ':''}${t} mo</td><td style="padding:8px 0;border-top:1px solid rgba(255,255,255,.06);font-size:11px;text-align:right;font-family:DM Mono,monospace;font-weight:600">${fm(c.pmt)}</td></tr>`;}).join('');
-  const earlyHTML=s.earlyOn?`<div class="p-card"><div class="sec-label">⚡ EARLY PAYOFF</div><div class="ep-grid">${[{l:'30-DAY',p:.5},{l:'60-DAY',p:.3},{l:'90-DAY',p:.1}].map((e,i,a)=>{const sv=interest*e.p,po=total-sv,bp=Math.round((e.p/a[0].p)*100);return`<div class="ep-tile"><div class="ep-day">${e.l}</div><div class="ep-amt">${fm(po)}</div><div class="ep-save">Save ${fm(sv)}</div><div class="ep-bar"><div class="ep-bar-fill" style="width:${bp}%"></div></div></div>`;}).join('')}</div></div>`:'';
-  const refiHTML=s.refiOn?`<div class="p-card"><div class="sec-label">🔄 REFI SUMMARY</div><div class="refi-row"><span class="refi-key">Balance at midpoint</span><span class="refi-val">${fm(total*.5)}</span></div><div class="refi-row"><span class="refi-key">Cash to you</span><span class="refi-val g">${s.amt>total*.5?fm(s.amt-total*.5):'N/A'}</span></div></div>`:'';
-  return`<div style="background:var(--navy)"><div class="p-header"><div class="p-logo"><div class="p-logo-mark">C</div><div><div class="p-logo-name">Clear Capital</div><div class="p-logo-sub">FINANCING SOLUTIONS</div></div></div><div class="p-badge">PRE-APPROVED</div></div><div class="p-hero"><div class="p-eyebrow">CONGRATULATIONS</div><div class="p-biz">${s.biz||'Business Name'}</div><div class="p-sub">Your personalized offer is ready.</div></div><div class="p-main"><div class="p-card"><div style="text-align:center;font-size:9px;letter-spacing:.14em;color:var(--slate3);font-weight:700;margin-bottom:6px">FUNDING AMOUNT</div><div class="amt-fig">${fm(s.amt)}</div><div class="metrics"><div class="m-tile hi"><div class="m-val">${fm(pmt)}</div><div class="m-lbl">${s.selFreq.toUpperCase()} PMT</div></div><div class="m-tile"><div class="m-val">${fm(total)}</div><div class="m-lbl">TOTAL PAYBACK</div></div><div class="m-tile"><div class="m-val">${s.factor.toFixed(2)}×</div><div class="m-lbl">FACTOR</div></div></div></div><div class="p-card"><div class="sec-label">TERMS</div><div class="chip-row" style="margin-bottom:10px">${termBtns}</div><div class="sec-label">FREQUENCY</div><div class="chip-row">${freqBtns}</div><table style="width:100%;border-collapse:collapse;margin-top:12px">${termRows}</table></div>${earlyHTML}${refiHTML}</div></div>`;
+// ── SUPABASE HELPERS ──
+async function sbFetch(path,method='GET',body=null,token=null){
+  const headers={'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+(token||SB_KEY)};
+  if(method!=='GET'&&method!=='DELETE') headers['Prefer']='return=representation';
+  const opts={method,headers};
+  if(body) opts.body=JSON.stringify(body);
+  const res=await fetch(SB_URL+path,opts);
+  if(res.status===204) return {};
+  const text=await res.text();
+  try{return JSON.parse(text);}catch{return {};}
+}
+async function sbAuth(path,body){
+  const res=await fetch(SB_URL+'/auth/v1'+path,{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY},body:JSON.stringify(body)});
+  return res.json();
+}
+async function sbAuthGet(path,token){
+  const res=await fetch(SB_URL+'/auth/v1'+path,{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+token}});
+  return res.json();
 }
 
-function refreshAll(){readInputs();$('previewShell').innerHTML=renderPortal(S);}
+// ── AUTH ──
+function switchAuthTab(tab){
+  $('loginForm').style.display=tab==='login'?'':'none';
+  $('signupForm').style.display=tab==='signup'?'':'none';
+  document.querySelectorAll('.auth-tab').forEach((b,i)=>b.classList.toggle('active',(tab==='login'&&i===0)||(tab==='signup'&&i===1)));
+}
 
-async function saveOffer(){
-  readInputs();
-  if(!S.biz||S.biz==='Your Business'){showToast('⚠ Enter a business name first');return;}
-  const btn=$('saveBtn');btn.disabled=true;$('saveBtnTxt').textContent='Saving…';
-  const editingId=$('editingOfferId').value;
-  const offerId=editingId||genId();
-  const payload={
-    offer_id:offerId, biz:S.biz, fin_type:S.finType, max_amt:S.max,
-    amt:S.amt, factor:S.factor, terms:S.terms, freqs:S.freqs,
-    sel_term:S.selTerm, sel_freq:S.selFreq, refi_on:S.refiOn,
-    early_on:S.earlyOn, updated_at:new Date().toISOString(),
-    active_docs:JSON.stringify([...(S.activeDocs||[])]),
-    custom_docs:JSON.stringify(S.customDocs||[]),
-    stipulations:JSON.stringify(S.stipulations||[])
+async function doLogin(){
+  const email=$('loginEmail').value.trim();
+  const password=$('loginPassword').value;
+  if(!email||!password){$('loginErr').textContent='Please fill in all fields.';$('loginErr').style.display='block';return;}
+  $('loginBtn').disabled=true;$('loginBtn').textContent='Signing in...';
+  const data=await sbAuth('/token?grant_type=password',{email,password});
+  if(data.access_token){
+    SESSION=data;
+    await loadProfile();
+    bootApp();
+  } else {
+    $('loginErr').textContent=data.error_description||'Invalid email or password.';
+    $('loginErr').style.display='block';
+  }
+  $('loginBtn').disabled=false;$('loginBtn').textContent='Sign In';
+}
+
+async function doSignup(){
+  const name=$('signupName').value.trim();
+  const email=$('signupEmail').value.trim();
+  const password=$('signupPassword').value;
+  const code=$('signupCode').value.trim().toUpperCase();
+  if(!name||!email||!password){$('signupErr').textContent='Please fill in all fields.';$('signupErr').style.display='block';return;}
+  if(code!==INVITE_CODE){$('signupErr').textContent='Invalid invite code. Contact your admin.';$('signupErr').style.display='block';return;}
+  if(password.length<8){$('signupErr').textContent='Password must be at least 8 characters.';$('signupErr').style.display='block';return;}
+  $('signupBtn').disabled=true;$('signupBtn').textContent='Creating account...';
+  const data=await sbAuth('/signup',{email,password,data:{full_name:name,role:'rep'}});
+  if(data.user||data.id){
+    $('signupErr').style.display='none';
+    $('signupMsg').textContent='Account created! Check your email to confirm, then sign in.';
+    $('signupMsg').style.display='block';
+  } else {
+    $('signupErr').textContent=data.error_description||data.msg||'Signup failed. Try again.';
+    $('signupErr').style.display='block';
+  }
+  $('signupBtn').disabled=false;$('signupBtn').textContent='Create Account';
+}
+
+async function doSignOut(){
+  if(SESSION?.access_token) await sbAuth('/logout',{}).catch(()=>{});
+  SESSION=null;PROFILE=null;
+  $('appScreen').style.display='none';
+  $('authScreen').style.display='flex';
+}
+
+async function loadProfile(){
+  if(!SESSION?.access_token) return;
+  const data=await sbFetch('/rest/v1/profiles?id=eq.'+SESSION.user.id+'&select=*',  'GET',null,SESSION.access_token);
+  if(Array.isArray(data)&&data.length) PROFILE=data[0];
+  else PROFILE={id:SESSION.user.id,email:SESSION.user.email,full_name:SESSION.user.user_metadata?.full_name||SESSION.user.email,role:'rep'};
+}
+
+// ── BOOT ──
+async function bootApp(){
+  $('authScreen').style.display='none';
+  $('appScreen').style.display='flex';
+  const name=PROFILE?.full_name||PROFILE?.email||'';
+  $('sidebarUserName').textContent=name;
+  $('sidebarUserRole').textContent=(PROFILE?.role||'rep').toUpperCase();
+  const hour=new Date().getHours();
+  const greet=hour<12?'Good morning':'hour<17?'Good afternoon':'Good evening';
+  $('dashGreeting').textContent=greet+', '+(name.split(' ')[0]||'there');
+  // Show admin nav if admin
+  if(PROFILE?.role==='admin'){
+    $('adminNavSection').style.display='';
+    $('teamNavItem').style.display='';
+    $('allDealsNavItem').style.display='';
+  }
+  await loadAllData();
+  showView('dashboard');
+}
+
+async function loadAllData(){
+  const token=SESSION?.access_token||SB_KEY;
+  // Load deals
+  const dealPath=PROFILE?.role==='admin'
+    ?'/rest/v1/deals?order=updated_at.desc&select=*'
+    :'/rest/v1/deals?rep_id=eq.'+PROFILE?.id+'&order=updated_at.desc&select=*';
+  const deals=await sbFetch(dealPath,'GET',null,token);
+  ALL_DEALS=Array.isArray(deals)?deals:[];
+  // Load offers
+  const offerPath=PROFILE?.role==='admin'
+    ?'/rest/v1/offers?order=updated_at.desc&select=*'
+    :'/rest/v1/offers?rep_id=eq.'+PROFILE?.id+'&order=updated_at.desc&select=*';
+  const offers=await sbFetch(offerPath,'GET',null,token);
+  ALL_OFFERS=Array.isArray(offers)?offers:[];
+  // Load profiles (admin)
+  if(PROFILE?.role==='admin'){
+    const profiles=await sbFetch('/rest/v1/profiles?select=*','GET',null,token);
+    ALL_PROFILES=Array.isArray(profiles)?profiles:[];
+  }
+  refreshStats();
+}
+
+// ── VIEWS ──
+function showView(name){
+  document.querySelectorAll('.page-view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  $('view-'+name)?.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{if(n.getAttribute('onclick')?.includes("'"+name+"'"))n.classList.add('active');});
+  if(name==='dashboard') renderDashboard();
+  if(name==='deals') renderDeals();
+  if(name==='offers') renderOffers();
+  if(name==='team') renderTeam();
+  if(name==='alldeals') renderAllDeals();
+  if(name==='builder'){
+    $('builderFrame').src='index.html';
+  }
+}
+
+// ── STATS ──
+function refreshStats(){
+  $('statTotal').textContent=ALL_DEALS.length;
+  $('statPending').textContent=ALL_DEALS.filter(d=>d.stage==='Docs Requested').length;
+  $('statFunded').textContent=ALL_DEALS.filter(d=>d.stage==='Funded').length;
+  $('statOffers').textContent=ALL_OFFERS.length;
+}
+
+// ── DASHBOARD ──
+function renderDashboard(){
+  refreshStats();
+  const recent=ALL_DEALS.slice(0,8);
+  $('recentDealsBody').innerHTML=recent.length?recent.map(d=>`
+    <tr onclick="openDeal(${d.id})">
+      <td><strong>${d.business_name||'—'}</strong></td>
+      <td>${d.merchant_name||'—'}</td>
+      <td>${fm(d.amount)}</td>
+      <td><span class="stage-badge ${stageCls(d.stage)}">${d.stage}</span></td>
+      <td style="color:var(--s4);font-size:12px">${timeAgo(d.updated_at)}</td>
+    </tr>`).join(''):`<tr><td colspan="5" style="padding:32px;text-align:center;color:var(--s3)">No deals yet. Create your first one.</td></tr>`;
+}
+
+// ── DEALS ──
+function renderDeals(filtered=null){
+  const deals=filtered||ALL_DEALS;
+  $('dealsBody').innerHTML=deals.length?deals.map(d=>`
+    <tr onclick="openDeal(${d.id})">
+      <td><strong>${d.business_name||'—'}</strong></td>
+      <td>${d.merchant_name||'—'}<br><span style="font-size:11px;color:var(--s4)">${d.merchant_email||''}</span></td>
+      <td>${fm(d.amount)}</td>
+      <td><span class="stage-badge ${stageCls(d.stage)}">${d.stage}</span></td>
+      <td style="font-size:12px;color:var(--s3)">${d.rep_name||'—'}</td>
+      <td style="font-size:12px;color:var(--s4)">${timeAgo(d.updated_at)}</td>
+      <td><button class="btn-white" style="padding:6px 12px;font-size:11px" onclick="event.stopPropagation();openDeal(${d.id})">View</button></td>
+    </tr>`).join(''):`<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">No deals yet</div><div class="empty-sub">Create your first deal to get started</div></div></td></tr>`;
+}
+
+function filterDeals(){
+  const q=$('dealSearch').value.toLowerCase();
+  const stage=$('stageFilter').value;
+  const filtered=ALL_DEALS.filter(d=>{
+    const matchQ=!q||(d.business_name||'').toLowerCase().includes(q)||(d.merchant_name||'').toLowerCase().includes(q);
+    const matchS=!stage||d.stage===stage;
+    return matchQ&&matchS;
+  });
+  renderDeals(filtered);
+}
+
+function openDeal(id){
+  currentDeal=ALL_DEALS.find(d=>d.id===id);
+  if(!currentDeal)return;
+  showView('deal-detail');
+  renderDealDetail();
+}
+
+function renderDealDetail(){
+  const d=currentDeal;
+  $('dealDetailTitle').textContent=d.business_name||'Deal Detail';
+  $('dealDetailInfo').innerHTML=`
+    <div class="detail-row"><span class="detail-key">Business</span><span class="detail-val">${d.business_name||'—'}</span></div>
+    <div class="detail-row"><span class="detail-key">Merchant</span><span class="detail-val">${d.merchant_name||'—'}</span></div>
+    <div class="detail-row"><span class="detail-key">Email</span><span class="detail-val" style="font-family:inherit;font-size:13px">${d.merchant_email||'—'}</span></div>
+    <div class="detail-row"><span class="detail-key">Phone</span><span class="detail-val">${d.merchant_phone||'—'}</span></div>
+    <div class="detail-row"><span class="detail-key">Amount Requested</span><span class="detail-val em">${fm(d.amount)}</span></div>
+    <div class="detail-row"><span class="detail-key">Rep</span><span class="detail-val">${d.rep_name||'—'}</span></div>
+    <div class="detail-row"><span class="detail-key">Created</span><span class="detail-val" style="font-size:12px">${new Date(d.created_at).toLocaleDateString()}</span></div>`;
+  $('dealNotes').value=d.notes||'';
+  // Stage select
+  const stages=['New Lead','Offer Sent','Docs Requested','Docs Received','Funded','Declined'];
+  $('dealStageSelect').innerHTML=stages.map(s=>`<option${s===d.stage?' selected':''}>${s}</option>`).join('');
+  $('dealStageBadge').innerHTML=`<span class="stage-badge ${stageCls(d.stage)}">${d.stage}</span>`;
+  // Linked offers
+  const linked=ALL_OFFERS.filter(o=>o.biz===d.business_name);
+  $('linkedOffers').innerHTML=linked.length?linked.map(o=>`
+    <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+      <div><div style="font-size:12px;font-weight:600">${o.offer_id}</div><div style="font-size:11px;color:var(--s3);margin-top:2px">${timeAgo(o.updated_at)}</div></div>
+      <button class="btn-white" style="padding:5px 12px;font-size:11px" onclick="navigator.clipboard.writeText('${PORTAL}/offer/${o.offer_id}').then(()=>showToast('Link copied!'))">Copy Link</button>
+    </div>`).join(''):`<div style="font-size:12px;color:var(--s3)">No offers linked yet. Use the builder to create one.</div>`;
+}
+
+async function updateDealStage(){
+  if(!currentDeal)return;
+  const stage=$('dealStageSelect').value;
+  await sbFetch(`/rest/v1/deals?id=eq.${currentDeal.id}`,'PATCH',{stage,updated_at:new Date().toISOString()},SESSION?.access_token);
+  currentDeal.stage=stage;
+  ALL_DEALS=ALL_DEALS.map(d=>d.id===currentDeal.id?{...d,stage}:d);
+  $('dealStageBadge').innerHTML=`<span class="stage-badge ${stageCls(stage)}">${stage}</span>`;
+  showToast('Stage updated');
+}
+
+async function saveDealNotes(){
+  if(!currentDeal)return;
+  const notes=$('dealNotes').value;
+  await sbFetch(`/rest/v1/deals?id=eq.${currentDeal.id}`,'PATCH',{notes,updated_at:new Date().toISOString()},SESSION?.access_token);
+  currentDeal.notes=notes;
+  ALL_DEALS=ALL_DEALS.map(d=>d.id===currentDeal.id?{...d,notes}:d);
+  showToast('Notes saved');
+}
+
+function openEditDealModal(){
+  if(!currentDeal)return;
+  $('ed_biz').value=currentDeal.business_name||'';
+  $('ed_merchant').value=currentDeal.merchant_name||'';
+  $('ed_email').value=currentDeal.merchant_email||'';
+  $('ed_phone').value=currentDeal.merchant_phone||'';
+  $('ed_amount').value=currentDeal.amount||'';
+  openModal('editDealModal');
+}
+
+async function saveEditDeal(){
+  if(!currentDeal)return;
+  const patch={
+    business_name:$('ed_biz').value.trim(),
+    merchant_name:$('ed_merchant').value.trim(),
+    merchant_email:$('ed_email').value.trim(),
+    merchant_phone:$('ed_phone').value.trim(),
+    amount:parseFloat($('ed_amount').value.replace(/[^0-9.]/g,''))||null,
+    updated_at:new Date().toISOString()
   };
-  try{
-    if(editingId){
-      await sbFetch(`/rest/v1/offers?offer_id=eq.${editingId}`,'PATCH',payload);
-    } else {
-      await sbFetch('/rest/v1/offers','POST',payload);
-    }
-    const link=`${PORTAL_BASE}/offer/${offerId}`;
-    $('savedOfferId').textContent=offerId;
-    $('savedOfferLink').textContent=link;
-    $('editingOfferId').value=offerId;
-    $('builderTitle').textContent='Editing Offer';
-    $('saveBtnTxt').textContent='Update Offer';
-    openModal('saveModal');
-    loadSavedOffers();
-    showToast(editingId?'✓ Offer updated!':'✓ Offer saved!');
-  } catch(err){showToast('⚠ Error saving. Check Supabase config.');console.error(err);}
-  btn.disabled=false;
+  await sbFetch(`/rest/v1/deals?id=eq.${currentDeal.id}`,'PATCH',patch,SESSION?.access_token);
+  Object.assign(currentDeal,patch);
+  ALL_DEALS=ALL_DEALS.map(d=>d.id===currentDeal.id?{...d,...patch}:d);
+  closeModal('editDealModal');
+  renderDealDetail();
+  showToast('Deal updated');
 }
 
-function copyOfferLink(){navigator.clipboard.writeText($('savedOfferLink').textContent).then(()=>showToast('✓ Link copied!'));}
-
-async function loadSavedOffers(){
-  try{
-    const data=await sbFetch('/rest/v1/offers?order=updated_at.desc&select=*');
-    const list=$('savedOffersList'),none=$('noOffers');
-    if(!data||!data.length){list.innerHTML='';none.style.display='block';return;}
-    none.style.display='none';
-    list.innerHTML=data.map(o=>`<div class="saved-offer"><div class="saved-offer-info"><div class="saved-offer-biz">${o.biz}</div><div class="saved-offer-meta">${o.fin_type} · $${o.max_amt.toLocaleString()} max · ${o.factor}x</div><div class="saved-offer-id">ID: ${o.offer_id}</div></div><div class="saved-btns"><button class="saved-btn edit" onclick='loadOffer(${JSON.stringify(o)})'>Edit</button><button class="saved-btn copy" onclick="navigator.clipboard.writeText('${PORTAL_BASE}/offer/${o.offer_id}').then(()=>showToast('✓ Copied!'))">Copy</button><button class="saved-btn del" onclick="deleteOffer('${o.offer_id}')">Del</button></div></div>`).join('');
-  }catch(err){console.error(err);}
+function openNewDealModal(){
+  $('nd_biz').value='';$('nd_merchant').value='';$('nd_email').value='';$('nd_phone').value='';$('nd_amount').value='';
+  $('nd_stage').value='New Lead';$('newDealErr').style.display='none';
+  openModal('newDealModal');
 }
 
-function loadOffer(o){
-  S.biz=o.biz;S.finType=o.fin_type;S.max=o.max_amt;S.amt=o.amt;S.factor=o.factor;S.terms=o.terms;S.freqs=o.freqs;S.selTerm=o.sel_term;S.selFreq=o.sel_freq;S.refiOn=o.refi_on;S.earlyOn=o.early_on;
-  $('b_biz').value=S.biz;$('b_max').value=S.max.toLocaleString('en-US');$('b_factor').value=S.factor;$('b_terms').value=S.terms.join(', ');$('b_slider').value=S.amt;$('b_sliderLabel').textContent=fm(S.amt);$('b_refiOn').checked=S.refiOn;$('b_earlyOn').checked=S.earlyOn;
-  document.querySelectorAll('.pill').forEach(b=>b.classList.toggle('active',b.textContent.trim()===S.finType));
-  document.querySelectorAll('.freq-btn').forEach(b=>b.classList.toggle('active',S.freqs.includes(b.dataset.freq)));
-  $('editingOfferId').value=o.offer_id;$('builderTitle').textContent='Editing Offer';$('saveBtnTxt').textContent='Update Offer';
-  closeModal('savedOffersModal');refreshAll();showToast('Offer loaded — make changes and save');
+async function createDeal(){
+  const biz=$('nd_biz').value.trim();
+  const merchant=$('nd_merchant').value.trim();
+  if(!biz||!merchant){$('newDealErr').textContent='Business name and merchant name are required.';$('newDealErr').style.display='block';return;}
+  const deal={
+    rep_id:PROFILE?.id,
+    rep_name:PROFILE?.full_name||PROFILE?.email,
+    business_name:biz,
+    merchant_name:merchant,
+    merchant_email:$('nd_email').value.trim(),
+    merchant_phone:$('nd_phone').value.trim(),
+    amount:parseFloat($('nd_amount').value.replace(/[^0-9.]/g,''))||null,
+    stage:$('nd_stage').value,
+    created_at:new Date().toISOString(),
+    updated_at:new Date().toISOString()
+  };
+  const res=await sbFetch('/rest/v1/deals','POST',deal,SESSION?.access_token);
+  const newDeal=Array.isArray(res)?res[0]:res;
+  if(newDeal?.id){
+    ALL_DEALS.unshift(newDeal);
+    closeModal('newDealModal');
+    showToast('Deal created!');
+    refreshStats();
+    renderDashboard();
+    if($('view-deals').classList.contains('active')) renderDeals();
+  } else {
+    $('newDealErr').textContent='Error creating deal. Try again.';$('newDealErr').style.display='block';
+  }
 }
 
-async function deleteOffer(id){if(!confirm('Delete this offer?'))return;await sbFetch(`/rest/v1/offers?offer_id=eq.${id}`,'DELETE');loadSavedOffers();showToast('Offer deleted');}
-
-function newOffer(){$('editingOfferId').value='';$('builderTitle').textContent='Create New Offer';$('saveBtnTxt').textContent='Save & Get Link';$('b_biz').value='';refreshAll();}
-
-function openSendModal(){
-  const editingId=$('editingOfferId').value;
-  if(!editingId){showToast('⚠ Save the offer first to get a link');return;}
-  const{total,pmt}=calc(S.amt,S.selTerm,S.selFreq,S.factor);
-  const link=`${PORTAL_BASE}/offer/${editingId}`;
-  $('sf_subject').value=`Your Pre-Approved Offer — ${S.biz}`;
-  $('sf_biz').value=S.biz;$('sf_link').value=link;
-  $('sf_details').value=`Business: ${S.biz}\nType: ${S.finType}\nAmount: ${fm(S.amt)}\nTerm: ${S.selTerm} months\nFrequency: ${S.selFreq}\nFactor: ${S.factor.toFixed(2)}x\nTotal Payback: ${fm(total)}\nPer Payment: ${fm(pmt)}\nLink: ${link}`;
-  $('sf_preview').innerHTML=`<b style="color:#fff">${S.biz}</b><br>${S.finType} · ${fm(S.amt)} · ${S.selTerm} months · ${S.selFreq}<br>Factor ${S.factor.toFixed(2)}x · Payback ${fm(total)} · ${fm(pmt)}/${S.selFreq.toLowerCase()}<br><span style="color:var(--em)">🔗 ${link}</span>`;
-  openModal('sendModal');
+function goToBuilderForDeal(){
+  showView('builder');
 }
-function resetSendModal(){$('sendSuccess').style.display='none';$('sendFormWrap').style.display='block';$('sendBtn').disabled=false;$('sendBtn').textContent='Send Approval Email';}
 
-async function handleSend(e){
-  e.preventDefault();const btn=$('sendBtn'),err=$('sendErr');btn.disabled=true;btn.textContent='Sending…';err.style.display='none';
-  try{const res=await fetch('https://formsubmit.co/mark@clearcapfund.com',{method:'POST',body:new FormData($('sendForm')),headers:{Accept:'application/json'}});
-  if(res.ok){$('sendFormWrap').style.display='none';$('sendSuccess').style.display='block';showToast('✓ Sent!');}
-  else{err.style.display='block';btn.disabled=false;btn.textContent='Try Again';}}
-  catch{err.style.display='block';btn.disabled=false;btn.textContent='Try Again';}
+function copyDealOfferLink(){
+  const linked=ALL_OFFERS.filter(o=>o.biz===currentDeal?.business_name);
+  if(linked.length){
+    navigator.clipboard.writeText(`${PORTAL}/offer/${linked[0].offer_id}`).then(()=>showToast('Link copied!'));
+  } else showToast('No offer linked yet — create one in the builder');
 }
-$('sendForm').addEventListener('submit',handleSend);
-refreshAll();
+
+// ── OFFERS ──
+function renderOffers(){
+  $('offersBody').innerHTML=ALL_OFFERS.length?ALL_OFFERS.map(o=>`
+    <tr>
+      <td><strong>${o.biz||'—'}</strong></td>
+      <td style="font-family:'DM Mono',monospace;font-size:12px;color:var(--em)">${o.offer_id}</td>
+      <td>${fm(o.max_amt||0)}</td>
+      <td>${o.factor||'—'}x</td>
+      <td style="font-size:12px;color:var(--s4)">${timeAgo(o.updated_at)}</td>
+      <td><button class="btn-white" style="padding:5px 12px;font-size:11px" onclick="navigator.clipboard.writeText('${PORTAL}/offer/${o.offer_id}').then(()=>showToast('Copied!'))">Copy Link</button></td>
+    </tr>`).join(''):`<tr><td colspan="6"><div class="empty-state"><div class="empty-icon">⚡</div><div class="empty-title">No offers yet</div><div class="empty-sub">Use the Offer Builder to create your first offer</div></div></td></tr>`;
+}
+
+// ── TEAM (admin) ──
+function renderTeam(){
+  $('repList').innerHTML=ALL_PROFILES.map(p=>`
+    <div class="rep-card">
+      <div class="rep-info">
+        <div class="rep-avatar">${(p.full_name||p.email||'?')[0].toUpperCase()}</div>
+        <div>
+          <div class="rep-name">${p.full_name||'—'}</div>
+          <div class="rep-email">${p.email||'—'}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="role-badge ${p.role==='admin'?'role-admin':'role-rep'}">${p.role||'rep'}</span>
+        ${p.id!==PROFILE?.id?`<button class="btn-white" style="padding:5px 12px;font-size:11px" onclick="toggleRole('${p.id}','${p.role}')">${p.role==='admin'?'Make Rep':'Make Admin'}</button>`:'<span style="font-size:11px;color:var(--s4)">You</span>'}
+      </div>
+    </div>`).join('');
+  // pending reps for invite modal
+  const pending=ALL_PROFILES.filter(p=>p.role==='rep'&&p.id!==PROFILE?.id);
+  $('pendingReps').innerHTML=pending.length?pending.slice(0,3).map(p=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+      <span style="font-size:12px">${p.full_name||p.email}</span>
+      <span class="role-badge role-rep">rep</span>
+    </div>`).join(''):'<div style="font-size:12px;color:var(--s3)">No pending reps.</div>';
+}
+
+async function toggleRole(id,currentRole){
+  const newRole=currentRole==='admin'?'rep':'admin';
+  if(!confirm(`Change this user to ${newRole}?`))return;
+  await sbFetch(`/rest/v1/profiles?id=eq.${id}`,'PATCH',{role:newRole},SESSION?.access_token);
+  ALL_PROFILES=ALL_PROFILES.map(p=>p.id===id?{...p,role:newRole}:p);
+  renderTeam();
+  showToast('Role updated');
+}
+
+// ── ALL DEALS (admin) ──
+function renderAllDeals(filtered=null){
+  const deals=filtered||ALL_DEALS;
+  // Populate rep filter
+  const reps=[...new Set(ALL_DEALS.map(d=>d.rep_name).filter(Boolean))];
+  const repFilter=$('allRepFilter');
+  const currentVal=repFilter.value;
+  repFilter.innerHTML='<option value="">All Reps</option>'+reps.map(r=>`<option${r===currentVal?' selected':''}>${r}</option>`).join('');
+  $('allDealsBody').innerHTML=deals.length?deals.map(d=>`
+    <tr onclick="openDeal(${d.id})" style="cursor:pointer">
+      <td><strong>${d.business_name||'—'}</strong></td>
+      <td>${d.merchant_name||'—'}</td>
+      <td>${fm(d.amount)}</td>
+      <td><span class="stage-badge ${stageCls(d.stage)}">${d.stage}</span></td>
+      <td style="color:var(--em);font-size:12px;font-weight:600">${d.rep_name||'—'}</td>
+      <td style="font-size:12px;color:var(--s4)">${timeAgo(d.updated_at)}</td>
+    </tr>`).join(''):'<tr><td colspan="6" style="padding:32px;text-align:center;color:var(--s3)">No deals found.</td></tr>';
+}
+
+function filterAllDeals(){
+  const q=$('allDealSearch').value.toLowerCase();
+  const rep=$('allRepFilter').value;
+  const filtered=ALL_DEALS.filter(d=>{
+    const matchQ=!q||(d.business_name||'').toLowerCase().includes(q)||(d.merchant_name||'').toLowerCase().includes(q);
+    const matchR=!rep||d.rep_name===rep;
+    return matchQ&&matchR;
+  });
+  renderAllDeals(filtered);
+}
+
+// ── INVITE ──
+function copyInviteCode(){
+  navigator.clipboard.writeText(INVITE_CODE).then(()=>showToast('Invite code copied!'));
+}
+
+// ── UTILS ──
+function stageCls(s){
+  const map={'New Lead':'stage-new','Offer Sent':'stage-sent','Docs Requested':'stage-docs','Docs Received':'stage-received','Funded':'stage-funded','Declined':'stage-declined'};
+  return map[s]||'stage-new';
+}
+function timeAgo(ts){
+  if(!ts) return '—';
+  const diff=Date.now()-new Date(ts);
+  const m=Math.floor(diff/60000);
+  if(m<1) return 'just now';
+  if(m<60) return m+'m ago';
+  const h=Math.floor(m/60);
+  if(h<24) return h+'h ago';
+  const d=Math.floor(h/24);
+  if(d<7) return d+'d ago';
+  return new Date(ts).toLocaleDateString();
+}
+
+// ── SESSION CHECK ON LOAD ──
+window.addEventListener('load',async()=>{
+  // Try to restore session from localStorage
+  const stored=localStorage.getItem('sb_session');
+  if(stored){
+    try{
+      SESSION=JSON.parse(stored);
+      // Verify token is still valid
+      const user=await sbAuthGet('/user',SESSION.access_token);
+      if(user.id){
+        SESSION.user=user;
+        await loadProfile();
+        bootApp();
+        return;
+      }
+    }catch{}
+  }
+  $('authScreen').style.display='flex';
+});
+
+// Save session to localStorage on login
+const origLogin=doLogin;
+doLogin=async function(){
+  await origLogin.call(this,...arguments);
+  if(SESSION?.access_token) localStorage.setItem('sb_session',JSON.stringify(SESSION));
+};
+
+async function doSignOut(){
+  localStorage.removeItem('sb_session');
+  if(SESSION?.access_token) await fetch(SB_URL+'/auth/v1/logout',{method:'POST',headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SESSION.access_token}}).catch(()=>{});
+  SESSION=null;PROFILE=null;
+  $('appScreen').style.display='none';
+  $('authScreen').style.display='flex';
+}
 </script>
 </body>
 </html>
