@@ -90,25 +90,24 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .disclaimer{font-size:11px;color:var(--slate4);text-align:center;line-height:1.6;margin-top:6px}
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .modal-overlay.open{display:flex}
-.modal{background:#0e1f36;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;width:100%;max-width:460px;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto}
+.modal{background:#0e1f36;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px;width:100%;max-width:500px;animation:slideUp .3s cubic-bezier(.34,1.56,.64,1);max-height:90vh;overflow-y:auto}
 @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
 .mhdr{display:flex;align-items:center;gap:12px;margin-bottom:20px}
 .micon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
 .mtitle{font-size:18px;font-weight:700}
 .msub{font-size:12px;color:var(--slate3);margin-top:2px}
-.ml{font-size:11px;color:var(--slate3);letter-spacing:.05em;font-weight:600;margin-bottom:6px;display:block}
-.mi{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s;margin-bottom:12px}
+.ml{font-size:11px;color:var(--slate3);letter-spacing:.05em;font-weight:600;margin-bottom:6px;display:block;margin-top:10px}
+.mi{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#fff;font-size:13px;font-family:inherit;outline:none;transition:border-color .2s;margin-bottom:4px}
 .mi:focus{border-color:var(--em)}
 .mi::placeholder{color:var(--slate4)}
-textarea.mi{resize:none}
-.upload-zone{border:2px dashed rgba(255,255,255,.15);border-radius:12px;padding:18px;text-align:center;cursor:pointer;transition:all .2s;margin-bottom:12px}
+.upload-zone{border:2px dashed rgba(0,212,170,.2);border-radius:12px;padding:18px;text-align:center;cursor:pointer;transition:all .2s;margin:8px 0 4px}
 .upload-zone:hover{border-color:rgba(0,212,170,.5);background:rgba(0,212,170,.04)}
 .upload-zone.done{border-color:var(--em);background:rgba(0,212,170,.06)}
 .upload-lbl{font-size:12px;color:var(--slate3)}
 .upload-lbl.ok{color:var(--em);font-weight:600}
 .upload-hint{font-size:10px;color:var(--slate4);margin-top:3px}
-.mnote{font-size:11px;color:var(--slate4);line-height:1.6;padding:10px 12px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);margin-bottom:16px}
-.mbtns{display:flex;gap:8px}
+.mnote{font-size:11px;color:var(--slate4);line-height:1.6;padding:10px 12px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);margin:12px 0}
+.mbtns{display:flex;gap:8px;margin-top:4px}
 .mbtn-p{flex:1;padding:13px;border-radius:10px;background:var(--em);color:var(--navy);font-weight:700;font-size:14px;border:none;cursor:pointer;font-family:inherit;transition:all .2s}
 .mbtn-p:hover{background:var(--em2)}
 .mbtn-p:disabled{opacity:.5;cursor:not-allowed}
@@ -118,7 +117,7 @@ textarea.mi{resize:none}
 .ctag{padding:6px 12px;border-radius:100px;font-size:11px;font-weight:500;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:var(--slate3);cursor:pointer;transition:all .2s}
 .ctag.active{border-color:var(--amber);color:var(--amber);background:rgba(245,158,11,.08)}
 .form-success{text-align:center;padding:28px 16px}
-.form-success .si{font-size:44px;margin-bottom:14px}
+.form-success .si{font-size:44px;margin-bottom:14px;display:block}
 .form-success h3{font-size:18px;font-weight:700;color:var(--em);margin-bottom:6px}
 .form-success p{font-size:13px;color:var(--slate3);line-height:1.6}
 .ferr{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:10px 12px;font-size:12px;color:#fca5a5;margin-bottom:12px;display:none}
@@ -132,7 +131,7 @@ textarea.mi{resize:none}
 <div id="loadingScreen"><div class="spinner"></div><p>Loading your offer…</p></div>
 <div id="errorScreen">
   <h2>Offer Not Found</h2>
-  <p>This offer may have expired or the link may be incorrect.<br><br>Please contact <a href="mailto:mark@clearcapfund.com" style="color:var(--em)">mark@clearcapfund.com</a></p>
+  <p>This offer may have expired or the link may be incorrect.<br><br>Please contact <a href="mailto:info@theclearcap.com" style="color:var(--em)">info@theclearcap.com</a></p>
 </div>
 
 <div class="page" id="portalContent" style="display:none">
@@ -175,12 +174,12 @@ textarea.mi{resize:none}
       </table>
     </div>
     <div class="card" id="earlyCard">
-      <div class="sec-label">⚡ EARLY PAYOFF DISCOUNTS</div>
+      <div class="sec-label">EARLY PAYOFF DISCOUNTS</div>
       <p style="font-size:12px;color:var(--slate3);margin-bottom:14px;line-height:1.5">Pay off early and save — interest stops the day you settle.</p>
       <div class="ep-grid" id="epGrid"></div>
     </div>
     <div class="card" id="refiCard">
-      <div class="sec-label">🔄 REFI & PAYOFF SUMMARY</div>
+      <div class="sec-label">REFI & PAYOFF SUMMARY</div>
       <p style="font-size:12px;color:var(--slate3);margin-bottom:14px;line-height:1.5" id="refiIntro"></p>
       <div id="refiRows"></div>
       <div class="refi-callout" id="refiCallout" style="display:none">
@@ -191,21 +190,21 @@ textarea.mi{resize:none}
     <div class="card">
       <div class="sec-label">HOW THIS WORKS</div>
       <div class="steps">
-        <div class="step"><div class="step-num">1</div><div><div class="step-title">Choose your amount &amp; terms</div><div class="step-desc">Use the slider to pick the funding amount that works best for your business.</div></div></div>
-        <div class="step"><div class="step-num">2</div><div><div class="step-title">Confirm your offer</div><div class="step-desc">Upload a Driver's License and Voided Check. Our team reviews and finalizes — usually within hours.</div></div></div>
+        <div class="step"><div class="step-num">1</div><div><div class="step-title">Choose your amount & terms</div><div class="step-desc">Use the slider to pick the funding amount that works best for your business.</div></div></div>
+        <div class="step"><div class="step-num">2</div><div><div class="step-title">Confirm your offer</div><div class="step-desc">Upload your required documents. Our team reviews and finalizes — usually within hours.</div></div></div>
         <div class="step"><div class="step-num">3</div><div><div class="step-title">Receive funds</div><div class="step-desc">Funds deposited directly to your business account — typically within 1–2 business days.</div></div></div>
       </div>
     </div>
     <div class="cta-wrap">
-              <button class="btn-p" onclick="openConfirmModal()">
+      <button class="btn-p" onclick="openConfirmModal()">
         <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        Confirm Offer &amp; Upload Documents
+        Confirm Offer & Upload Documents
       </button>
       <button class="btn-s" onclick="openModal('changesModal')">
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
         Request Changes or Ask a Question
       </button>
-      <p class="disclaimer">Offer valid 30 days. Final terms subject to underwriting review.<br>Questions? <a href="mailto:mark@clearcapfund.com" style="color:var(--em)">mark@clearcapfund.com</a></p>
+      <p class="disclaimer">Offer valid 30 days. Final terms subject to underwriting review.<br>Questions? <a href="mailto:info@theclearcap.com" style="color:var(--em)">info@theclearcap.com</a></p>
     </div>
   </main>
 </div>
@@ -214,15 +213,15 @@ textarea.mi{resize:none}
 <div class="modal-overlay" id="confirmModal">
   <div class="modal">
     <div id="confirmSuccess" style="display:none" class="form-success">
-      <div class="si">✅</div><h3>Documents received!</h3>
+      <span class="si">✅</span><h3>Documents received!</h3>
       <p>Mark will be in touch within 1 business day to finalize your funding.</p>
       <button class="mbtn-c" style="margin-top:18px;width:100%" onclick="closeModal('confirmModal')">Close</button>
     </div>
     <div id="confirmWrap">
-      <div class="mhdr"><div class="micon" style="background:rgba(0,212,170,.1)">✅</div><div><div class="mtitle">Confirm Your Offer</div><div class="msub">Upload your required documents to activate funding</div></div></div>
+      <div class="mhdr"><div class="micon" style="background:rgba(0,212,170,.1)">✅</div><div><div class="mtitle">Confirm Your Offer</div><div class="msub">Upload your required documents</div></div></div>
       <div class="ferr" id="confirmErr">Something went wrong. Please email info@theclearcap.com.</div>
       <form id="confirmForm" action="https://formsubmit.co/info@theclearcap.com" method="POST" enctype="multipart/form-data">
-        <div id="confirmModalBody"><!-- dynamically built --></div>
+        <div id="confirmModalBody"></div>
       </form>
     </div>
   </div>
@@ -231,11 +230,15 @@ textarea.mi{resize:none}
 <!-- CHANGES MODAL -->
 <div class="modal-overlay" id="changesModal">
   <div class="modal">
-    <div id="changesSuccess" style="display:none" class="form-success"><div class="si">✉️</div><h3>Request sent!</h3><p>Mark will get back to you within 1 business day.</p><button class="mbtn-c" style="margin-top:18px;width:100%" onclick="closeModal('changesModal')">Close</button></div>
+    <div id="changesSuccess" style="display:none" class="form-success">
+      <span class="si">✉️</span><h3>Request sent!</h3>
+      <p>Mark will get back to you within 1 business day.</p>
+      <button class="mbtn-c" style="margin-top:18px;width:100%" onclick="closeModal('changesModal')">Close</button>
+    </div>
     <div id="changesWrap">
       <div class="mhdr"><div class="micon" style="background:rgba(245,158,11,.1)">✏️</div><div><div class="mtitle">Request Changes</div><div class="msub">Tell us what you'd like adjusted</div></div></div>
       <div class="ferr" id="changesErr">Something went wrong. Please try again.</div>
-      <form id="changesForm" action="https://formsubmit.co/mark@clearcapfund.com" method="POST">
+      <form id="changesForm" action="https://formsubmit.co/info@theclearcap.com" method="POST">
         <input type="hidden" name="_subject" id="ch_subject">
         <input type="hidden" name="business_name" id="ch_biz">
         <input type="hidden" name="offer_id" id="ch_oid">
@@ -255,8 +258,11 @@ textarea.mi{resize:none}
         <label class="ml">YOUR NAME</label><input class="mi" name="full_name" type="text" placeholder="Jane Smith" required>
         <label class="ml">PHONE</label><input class="mi" name="phone" type="tel" placeholder="(555) 000-0000" required>
         <label class="ml">EMAIL</label><input class="mi" name="email" type="email" placeholder="jane@yourbusiness.com" required>
-        <div class="mnote">Sent to <strong style="color:var(--em)">mark@clearcapfund.com</strong>. Response within 1 business day.</div>
-        <div class="mbtns"><button type="button" class="mbtn-c" onclick="closeModal('changesModal')">Cancel</button><button type="submit" class="mbtn-p" id="changesBtn" style="background:var(--amber);color:#1a1000">Send Request</button></div>
+        <div class="mnote">Sent to <strong style="color:var(--em)">info@theclearcap.com</strong>. Response within 1 business day.</div>
+        <div class="mbtns">
+          <button type="button" class="mbtn-c" onclick="closeModal('changesModal')">Cancel</button>
+          <button type="submit" class="mbtn-p" id="changesBtn" style="background:var(--amber);color:#1a1000">Send Request</button>
+        </div>
       </form>
     </div>
   </div>
@@ -266,16 +272,31 @@ textarea.mi{resize:none}
 
 <script>
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// 🔧 CONFIG — MUST MATCH BUILDER
+// CONFIG
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-const SUPABASE_URL      = 'https://fzfahgmrcltvpuypgmav.supabase.co';
-const SUPABASE_ANON_KEY = 'PASTE_YOUR_ANON_KEY_HERE';
+const SUPABASE_URL      = 'https://dmhiltzyfxdrcvysisry.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_axd4IUocVRQPbauHu068uA_DWhupXmV';
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 const $=id=>document.getElementById(id);
 const fm=v=>'$'+Math.round(v).toLocaleString('en-US');
 const selectedTags=new Set();
 let S={};
+
+const ALL_DOC_DEFS={
+  dl:{icon:'🪪',label:"Driver's License",hint:'Front of license — JPG, PNG, or PDF'},
+  void:{icon:'🏦',label:'Voided Check',hint:'Business checking account check marked VOID'},
+  bank:{icon:'🏦',label:'4 Most Recent Bank Statements',hint:'All pages required — PDF preferred',multi:true},
+  pl:{icon:'📊',label:'P&L Statement',hint:'Profit & Loss for most recent period'},
+  biztax:{icon:'📋',label:'Business Tax Returns',hint:'Most recent 1–2 years'},
+  pertax:{icon:'📋',label:'Personal Tax Returns',hint:'Most recent 1–2 years'},
+  ar:{icon:'📈',label:'Accounts Receivable (AR)',hint:'Current AR aging report'},
+  proc:{icon:'💳',label:'Processing Statements',hint:'Most recent 4 months'},
+  payoff:{icon:'📄',label:'Payoff Letter(s)',hint:'From current lender(s)'},
+  zero:{icon:'✅',label:'Zero Balance Letter(s)',hint:'From previous lender(s)'},
+  proof:{icon:'🏢',label:'Proof of Business',hint:'Lease, utility bill, or business license'},
+  app:{icon:'📝',label:'Business Application',hint:'Completed and signed'},
+};
 
 async function loadOffer(){
   const parts=location.pathname.split('/').filter(Boolean);
@@ -289,13 +310,13 @@ async function loadOffer(){
     if(!data||!data.length){showError();return;}
     const o=data[0];
     S={
-      biz:o.biz, finType:o.fin_type, max:o.max_amt, min:5000,
-      amt:Math.round(o.max_amt*.75), factor:o.factor,
-      terms:o.terms, freqs:o.freqs, selTerm:o.sel_term, selFreq:o.sel_freq,
-      refiOn:o.refi_on, earlyOn:o.early_on, offerId:o.offer_id,
-      activeDocs: o.active_docs ? JSON.parse(o.active_docs) : ['dl','void'],
-      customDocs: o.custom_docs ? JSON.parse(o.custom_docs) : [],
-      stipulations: o.stipulations ? JSON.parse(o.stipulations) : []
+      biz:o.biz,finType:o.fin_type,max:o.max_amt,min:5000,
+      amt:Math.round(o.max_amt*.75),factor:o.factor,
+      terms:o.terms,freqs:o.freqs,selTerm:o.sel_term,selFreq:o.sel_freq,
+      refiOn:o.refi_on,earlyOn:o.early_on,offerId:o.offer_id,
+      activeDocs:o.active_docs?JSON.parse(o.active_docs):['dl','void'],
+      customDocs:o.custom_docs?JSON.parse(o.custom_docs):[],
+      stipulations:o.stipulations?JSON.parse(o.stipulations):[]
     };
     if(!S.terms.includes(S.selTerm))S.selTerm=S.terms[0];
     if(!S.freqs.includes(S.selFreq))S.selFreq=S.freqs[0];
@@ -324,10 +345,10 @@ function render(){
 function refreshCalc(){
   const{total,pmt,p:tp}=calc(S.amt,S.selTerm,S.selFreq,S.factor);
   $('mPmt').textContent=fm(pmt);$('mPmtLbl').textContent=S.selFreq.toUpperCase()+' PAYMENT';
-  $('mTotal').textContent=fm(total);$('mFactor').textContent=S.factor.toFixed(2)+'×';
+  $('mTotal').textContent=fm(total);$('mFactor').textContent=S.factor.toFixed(2)+'x';
   $('termRows').innerHTML=S.terms.map(t=>{const c=calc(S.amt,t,S.selFreq,S.factor);return`<tr class="${t===S.selTerm?'ar':''}"><td>${t} months</td><td>${fm(c.total)}</td><td>${fm(c.pmt)}</td></tr>`;}).join('');
   if(S.earlyOn){const interest=total-S.amt;$('epGrid').innerHTML=[{l:'30-DAY',p:.5},{l:'60-DAY',p:.3},{l:'90-DAY',p:.1}].map((e,i,a)=>{const sv=interest*e.p,po=total-sv,bp=Math.round((e.p/a[0].p)*100);return`<div class="ep-tile"><div class="ep-day">${e.l} PAYOFF</div><div class="ep-amt">${fm(po)}</div><div class="ep-save">Save ${fm(sv)}</div><div class="ep-bar"><div class="ep-bar-fill" style="width:${bp}%"></div></div></div>`;}).join('');}
-  if(S.refiOn){const half=S.selTerm/2,rb=total*.5,rrp=Math.round(tp/2),co=S.amt-rb;$('refiIntro').innerHTML=`After <strong style="color:#fff">${rrp} payments</strong> (${half} months), here's what a refinance looks like:`;$('refiRows').innerHTML=`<div class="refi-row"><span class="refi-key">Balance owed at midpoint</span><span class="refi-val">${fm(rb)}</span></div><div class="refi-row"><span class="refi-key">Remaining payments</span><span class="refi-val">${rrp} × ${fm(pmt)} = ${fm(rrp*pmt)}</span></div><div class="refi-row"><span class="refi-key">New funding amount</span><span class="refi-val">${fm(S.amt)}</span></div><div class="refi-row"><span class="refi-key">Cash to you after payoff</span><span class="refi-val${co>0?' g':''}">${co>0?fm(co):'N/A'}</span></div>`;if(co>0){$('refiCallout').style.display='flex';$('refiCalloutText').innerHTML=`At the halfway point, we pay off your ${fm(rb)} balance and put <strong>${fm(co)}</strong> in your pocket.`;}else $('refiCallout').style.display='none';}
+  if(S.refiOn){const half=S.selTerm/2,rb=total*.5,rrp=Math.round(tp/2),co=S.amt-rb;$('refiIntro').innerHTML=`After <strong style="color:#fff">${rrp} payments</strong> (${half} months), here's what a refinance looks like:`;$('refiRows').innerHTML=`<div class="refi-row"><span class="refi-key">Balance owed at midpoint</span><span class="refi-val">${fm(rb)}</span></div><div class="refi-row"><span class="refi-key">Remaining payments</span><span class="refi-val">${rrp} x ${fm(pmt)} = ${fm(rrp*pmt)}</span></div><div class="refi-row"><span class="refi-key">New funding amount</span><span class="refi-val">${fm(S.amt)}</span></div><div class="refi-row"><span class="refi-key">Cash to you after payoff</span><span class="refi-val${co>0?' g':''}">${co>0?fm(co):'N/A'}</span></div>`;if(co>0){$('refiCallout').style.display='flex';$('refiCalloutText').innerHTML=`At the halfway point, we pay off your ${fm(rb)} balance and put <strong>${fm(co)}</strong> in your pocket.`;}else $('refiCallout').style.display='none';}
   syncHidden(total,pmt);
 }
 
@@ -336,71 +357,48 @@ function setFreq(f){S.selFreq=f;$('freqChips').querySelectorAll('.chip').forEach
 $('amtSlider').addEventListener('input',e=>{S.amt=parseInt(e.target.value);$('dispAmt').textContent=fm(S.amt);clearTimeout(window._st);window._st=setTimeout(refreshCalc,100);});
 
 function syncHidden(total,pmt){
-  $('cf_subject').value=`Offer Confirmation — ${S.biz}`;$('cf_biz').value=S.biz;$('cf_oid').value=S.offerId;$('cf_amt').value=fm(S.amt);$('cf_term').value=S.selTerm+' months';$('cf_freq').value=S.selFreq;$('cf_factor').value=S.factor.toFixed(2)+'x';$('cf_total').value=fm(total);$('cf_pmt').value=fm(pmt)+' per '+S.selFreq.toLowerCase();
-  $('ch_subject').value=`Change Request — ${S.biz}`;$('ch_biz').value=S.biz;$('ch_oid').value=S.offerId;
+  $('cf_subject')&&($('cf_subject').value=`Offer Confirmation — ${S.biz}`);
+  $('cf_biz')&&($('cf_biz').value=S.biz);
+  $('cf_oid')&&($('cf_oid').value=S.offerId);
+  $('cf_amt')&&($('cf_amt').value=fm(S.amt));
+  $('cf_term')&&($('cf_term').value=S.selTerm+' months');
+  $('cf_freq')&&($('cf_freq').value=S.selFreq);
+  $('cf_factor')&&($('cf_factor').value=S.factor.toFixed(2)+'x');
+  $('cf_total')&&($('cf_total').value=fm(total));
+  $('cf_pmt')&&($('cf_pmt').value=fm(pmt)+' per '+S.selFreq.toLowerCase());
+  $('ch_subject')&&($('ch_subject').value=`Change Request — ${S.biz}`);
+  $('ch_biz')&&($('ch_biz').value=S.biz);
+  $('ch_oid')&&($('ch_oid').value=S.offerId);
 }
-function openModal(id){$(id).classList.add('open');}
-function closeModal(id){$(id).classList.remove('open');}
-function showToast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
-function fileChosen(i,l,z){const f=$(i).files[0];if(f){$(l).textContent='✓ '+f.name;$(l).classList.add('ok');$(z).classList.add('done');}}
-function toggleTag(btn){const tag=btn.textContent.trim();if(selectedTags.has(tag)){selectedTags.delete(tag);btn.classList.remove('active');}else{selectedTags.add(tag);btn.classList.add('active');}$('changeTagsInput').value=[...selectedTags].join(', ');}
-// ── DYNAMIC CONFIRM MODAL ──
-const ALL_DOC_DEFS = {
-  dl:     {icon:'🪪', label:"Driver's License",        hint:'Front of license — JPG, PNG, or PDF'},
-  void:   {icon:'🏦', label:'Voided Check',             hint:'Business checking account check marked VOID'},
-  bank:   {icon:'🏦', label:'4 Most Recent Bank Statements', hint:'All pages required — PDF preferred'},
-  pl:     {icon:'📊', label:'P&L Statement',            hint:'Profit & Loss for most recent period'},
-  biztax: {icon:'📋', label:'Business Tax Returns',     hint:'Most recent 1–2 years'},
-  pertax: {icon:'📋', label:'Personal Tax Returns',     hint:'Most recent 1–2 years'},
-  ar:     {icon:'📈', label:'Accounts Receivable (AR)', hint:'Current AR aging report'},
-  proc:   {icon:'💳', label:'Processing Statements',    hint:'Most recent 4 months'},
-  payoff: {icon:'📄', label:'Payoff Letter(s)',          hint:'From current lender(s)'},
-  zero:   {icon:'✅', label:'Zero Balance Letter(s)',    hint:'From previous lender(s)'},
-  proof:  {icon:'🏢', label:'Proof of Business',        hint:'Lease, utility bill, or business license'},
-  app:    {icon:'📝', label:'Business Application',     hint:'Completed and signed'},
-};
 
 function buildConfirmModal(){
-  const docs = S.activeDocs || ['dl','void'];
-  const customDocs = S.customDocs || [];
-  const stips = S.stipulations || [];
-
-  // Build upload zones
-  const allDocs = [
-    ...docs.map(id => ALL_DOC_DEFS[id] ? {id, ...ALL_DOC_DEFS[id]} : null).filter(Boolean),
-    ...customDocs.filter(c => docs.includes(c.id)).map(c=>({id:c.id, icon:'📎', label:c.label, hint:'Upload as PDF, JPG, or PNG'}))
+  const docs=S.activeDocs||['dl','void'];
+  const customDocs=S.customDocs||[];
+  const stips=S.stipulations||[];
+  const allDocs=[
+    ...docs.map(id=>ALL_DOC_DEFS[id]?{id,...ALL_DOC_DEFS[id]}:null).filter(Boolean),
+    ...customDocs.filter(c=>docs.includes(c.id)).map(c=>({id:c.id,icon:'📎',label:c.label,hint:'Upload as PDF, JPG, or PNG'}))
   ];
-
-  const uploadZones = allDocs.map(doc=>`
-    <label class="ml" style="margin-top:4px">${doc.icon} ${doc.label} <span style="color:var(--em)">*</span></label>
-    <div class="upload-zone ${doc.id === 'bank' ? 'multi-upload' : ''}" id="uz_${doc.id}" onclick="document.getElementById('uf_${doc.id}').click()">
+  const uploadZones=allDocs.map(doc=>`
+    <label class="ml">${doc.icon} ${doc.label} <span style="color:var(--em)">*</span></label>
+    <div class="upload-zone" id="uz_${doc.id}" onclick="document.getElementById('uf_${doc.id}').click()">
       <div style="font-size:22px;margin-bottom:6px">${doc.icon}</div>
       <div class="upload-lbl" id="ul_${doc.id}">Click to upload</div>
       <div class="upload-hint">${doc.hint}</div>
     </div>
-    <input id="uf_${doc.id}" type="file" accept=".pdf,image/*" ${doc.id==='bank'?'multiple':''} style="display:none"
+    <input id="uf_${doc.id}" type="file" accept=".pdf,image/*" ${doc.multi?'multiple':''} style="display:none"
       onchange="portalFileChosen('uf_${doc.id}','ul_${doc.id}','uz_${doc.id}')">
   `).join('');
-
-  // Build stipulations
-  const stipHTML = stips.length ? `
-    <div style="margin-bottom:14px">
-      <div style="font-size:11px;letter-spacing:.1em;color:var(--em);font-weight:700;margin-bottom:10px;text-transform:uppercase">Stipulations</div>
+  const stipHTML=stips.length?`
+    <div style="margin:14px 0">
+      <div style="font-size:11px;letter-spacing:.1em;color:var(--em);font-weight:700;margin-bottom:10px">STIPULATIONS</div>
       ${stips.map(s=>`
         <div style="background:rgba(${s.mustAck?'245,158,11':'0,212,170'},.06);border:1px solid rgba(${s.mustAck?'245,158,11':'0,212,170'},.2);border-radius:10px;padding:12px 14px;margin-bottom:8px">
           <div style="font-size:13px;line-height:1.6;color:${s.mustAck?'var(--amber)':'var(--em)'};margin-bottom:${s.mustAck?8:0}px">${s.text||''}</div>
-          ${s.mustAck?`
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;font-weight:600;color:var(--s3)">
-              <input type="checkbox" id="ack_${s.id}" style="accent-color:var(--amber);width:15px;height:15px">
-              I acknowledge and agree to this stipulation
-            </label>
-          `:''}
-        </div>
-      `).join('')}
-    </div>
-  ` : '';
-
-  document.getElementById('confirmModalBody').innerHTML = `
+          ${s.mustAck?`<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;font-weight:600;color:var(--slate3)"><input type="checkbox" id="ack_${s.id}" style="accent-color:var(--amber);width:15px;height:15px"> I acknowledge and agree to this stipulation</label>`:''}
+        </div>`).join('')}
+    </div>`:'';
+  $('confirmModalBody').innerHTML=`
     <input type="hidden" name="_subject" id="cf_subject">
     <input type="hidden" name="business_name" id="cf_biz">
     <input type="hidden" name="offer_id" id="cf_oid">
@@ -413,71 +411,74 @@ function buildConfirmModal(){
     <label class="ml">FULL NAME</label><input class="mi" name="full_name" type="text" placeholder="Jane Smith" required>
     <label class="ml">PHONE</label><input class="mi" name="phone" type="tel" placeholder="(555) 000-0000" required>
     <label class="ml">EMAIL</label><input class="mi" name="email" type="email" placeholder="jane@yourbusiness.com" required>
-    <div style="height:8px"></div>
     ${uploadZones}
     ${stipHTML}
     <div class="mnote">Documents sent securely to <strong style="color:var(--em)">info@theclearcap.com</strong>.</div>
     <div class="mbtns">
       <button type="button" class="mbtn-c" onclick="closeModal('confirmModal')">Cancel</button>
       <button type="submit" class="mbtn-p" id="confirmBtn">Submit & Confirm</button>
-    </div>
-  `;
-  syncHidden(calc(S.amt,S.selTerm,S.selFreq,S.factor).total, calc(S.amt,S.selTerm,S.selFreq,S.factor).pmt);
+    </div>`;
+  const{total,pmt}=calc(S.amt,S.selTerm,S.selFreq,S.factor);
+  syncHidden(total,pmt);
 }
 
-function portalFileChosen(inputId, labelId, zoneId){
+function openConfirmModal(){buildConfirmModal();openModal('confirmModal');}
+
+function portalFileChosen(inputId,labelId,zoneId){
   const files=document.getElementById(inputId)?.files;
   if(!files||!files.length)return;
   const lbl=document.getElementById(labelId);
   const zone=document.getElementById(zoneId);
-  if(lbl) lbl.textContent='✓ '+files.length+' file'+(files.length>1?'s':'')+' — '+files[0].name+(files.length>1?' + '+(files.length-1)+' more':'');
-  if(lbl) lbl.classList.add('ok');
-  if(zone) zone.classList.add('done');
+  if(lbl){lbl.textContent='✓ '+files.length+' file'+(files.length>1?'s':'')+' — '+files[0].name+(files.length>1?' + '+(files.length-1)+' more':'');lbl.classList.add('ok');}
+  if(zone)zone.classList.add('done');
 }
 
-function openConfirmModal(){
-  buildConfirmModal();
-  openModal('confirmModal');
-}
-
-// Override confirm form submit to check stip acknowledgements
-document.addEventListener('submit', function(e){
+document.addEventListener('submit',function(e){
   if(!e.target||e.target.id!=='confirmForm')return;
   e.preventDefault();
-  const stips = S.stipulations||[];
-  const unacked = stips.filter(s=>s.mustAck && !document.getElementById('ack_'+s.id)?.checked);
+  const stips=S.stipulations||[];
+  const unacked=stips.filter(s=>s.mustAck&&!document.getElementById('ack_'+s.id)?.checked);
   if(unacked.length){
-    const el=document.querySelector('.mbtn-p[type=submit]');
-    const orig=el?.textContent;
-    if(el){el.textContent='Please acknowledge all stipulations';el.style.opacity='.7';setTimeout(()=>{el.textContent=orig;el.style.opacity='';},2500);}
+    const btn=$('confirmBtn');
+    if(btn){const orig=btn.textContent;btn.textContent='Please acknowledge all stipulations';btn.style.opacity='.7';setTimeout(()=>{btn.textContent=orig;btn.style.opacity='';},2500);}
     return;
   }
-  handleConfirmSubmit(e);
+  handleConfirmSubmit();
 });
 
-async function handleConfirmSubmit(e){
-  const btn=document.getElementById('confirmBtn');
-  if(btn){btn.disabled=true;btn.textContent='Sending…';}
-  const form=new FormData(document.getElementById('confirmForm'));
-  // attach uploaded files
+async function handleConfirmSubmit(){
+  const btn=$('confirmBtn');
+  if(btn){btn.disabled=true;btn.textContent='Sending...';}
+  const form=new FormData($('confirmForm'));
   const docs=[...(S.activeDocs||[]),...(S.customDocs||[]).map(c=>c.id)];
   docs.forEach(id=>{
     const inp=document.getElementById('uf_'+id);
-    if(inp?.files?.length) for(let f of inp.files) form.append('doc_'+id, f);
+    if(inp?.files?.length)for(let f of inp.files)form.append('doc_'+id,f);
   });
   try{
     const res=await fetch('https://formsubmit.co/info@theclearcap.com',{method:'POST',body:form,headers:{Accept:'application/json'}});
-    if(res.ok){
-      document.getElementById('confirmWrap').style.display='none';
-      document.getElementById('confirmSuccess').style.display='block';
-      showToast('✓ Sent!');
-    } else {
-      if(btn){btn.disabled=false;btn.textContent='Submit & Confirm';}
-    }
-  }catch{
-    if(btn){btn.disabled=false;btn.textContent='Try Again';}
-  }
+    if(res.ok){$('confirmWrap').style.display='none';$('confirmSuccess').style.display='block';showToast('Sent!');}
+    else{if(btn){btn.disabled=false;btn.textContent='Submit & Confirm';}}
+  }catch{if(btn){btn.disabled=false;btn.textContent='Try Again';}}
 }
+
+async function handleChangesSubmit(e){
+  e.preventDefault();
+  const btn=$('changesBtn'),err=$('changesErr');
+  btn.disabled=true;btn.textContent='Sending...';err.style.display='none';
+  try{
+    const res=await fetch('https://formsubmit.co/info@theclearcap.com',{method:'POST',body:new FormData($('changesForm')),headers:{Accept:'application/json'}});
+    if(res.ok){$('changesWrap').style.display='none';$('changesSuccess').style.display='block';showToast('Sent!');}
+    else{err.style.display='block';btn.disabled=false;btn.textContent='Send Request';}
+  }catch{err.style.display='block';btn.disabled=false;btn.textContent='Try Again';}
+}
+$('changesForm').addEventListener('submit',handleChangesSubmit);
+
+function openModal(id){$(id).classList.add('open');}
+function closeModal(id){$(id).classList.remove('open');}
+function showToast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+function toggleTag(btn){const tag=btn.textContent.trim();if(selectedTags.has(tag)){selectedTags.delete(tag);btn.classList.remove('active');}else{selectedTags.add(tag);btn.classList.add('active');}$('changeTagsInput').value=[...selectedTags].join(', ');}
+
 loadOffer();
 </script>
 </body>
